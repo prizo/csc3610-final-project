@@ -1,6 +1,7 @@
 package controllers;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -15,7 +16,10 @@ import javafx.scene.layout.BorderPane;
 public class LoginController {
 	
 	BorderPane root = TireShop.getRoot();
-	Statement statement = TireShop.getStatement();
+	Connection connection = TireShop.getConnection();
+	
+	// Access user throughout application
+	public static ResultSet user;
 	
 	@FXML
 	private TextField txtID;
@@ -28,13 +32,15 @@ public class LoginController {
 		
 		btnEnter.setOnAction(e -> {
 			String id = txtID.getText();
-			String queryString = "select * from Employee where Employee.employeeId = " + id;
+			String query = "select * from Employee where employeeId = " + id;
 			
 			try {
-				ResultSet rset = statement.executeQuery(queryString);
+				Statement statement = connection.createStatement();
 				
-				if (rset.next()) {
-					if (rset.getString(2) == null) {
+				user = statement.executeQuery(query);
+				
+				if (user.next()) {
+					if (user.getString(2) == null) {
 						try {
 							AnchorPane pane = FXMLLoader.load(getClass().getResource
 							  ("/views/PasswordCreate.fxml"));
@@ -58,10 +64,14 @@ public class LoginController {
 				}
 			}
 			catch (SQLException ex) {
-				ex.printStackTrace();
+				System.out.println("Invalid ID!");
 			}
 		});
 		
+	}
+	
+	public static ResultSet getUser() {
+		return user;
 	}
 
 }

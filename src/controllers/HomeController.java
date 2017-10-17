@@ -1,18 +1,21 @@
 package controllers;
 
 import java.io.IOException;
-import java.sql.Statement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Date;
 import application.TireShop;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Text;
 
 public class HomeController {
 	
 	BorderPane root = TireShop.getRoot();
-	Statement statement = TireShop.getStatement();
+	ResultSet user = LoginController.getUser();
 	
 	@FXML
 	private Hyperlink linkSearch;
@@ -27,11 +30,21 @@ public class HomeController {
 	private Hyperlink linkLogout;
 	
 	@FXML
+	private Text txtInfo;
+	
+	@FXML
 	private void initialize() {
+		
+		try {
+			txtInfo.setText("Logged in as " + user.getString(1));
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
 		
 		linkSearch.setOnAction(e -> {
 			try {
-				AnchorPane pane = FXMLLoader.load(getClass().getResource("/views/Search.fxml"));
+				AnchorPane pane = FXMLLoader.load(getClass().getResource
+				  ("/views/Search.fxml"));
 				root.setCenter(pane);
 			} catch (IOException ex) {
 				ex.printStackTrace();
@@ -40,7 +53,8 @@ public class HomeController {
 		
 		linkInvoice.setOnAction(e -> {
 			try {
-				AnchorPane pane = FXMLLoader.load(getClass().getResource("/views/Invoice.fxml"));
+				AnchorPane pane = FXMLLoader.load(getClass().getResource
+				  ("/views/Invoice.fxml"));
 				root.setCenter(pane);
 			} catch (IOException ex) {
 				ex.printStackTrace();
@@ -49,7 +63,8 @@ public class HomeController {
 		
 		linkAppointment.setOnAction(e -> {
 			try {
-				AnchorPane pane = FXMLLoader.load(getClass().getResource("/views/Appointment.fxml"));
+				AnchorPane pane = FXMLLoader.load(getClass().getResource
+				  ("/views/Appointment.fxml"));
 				root.setCenter(pane);
 			} catch (IOException ex) {
 				ex.printStackTrace();
@@ -57,7 +72,18 @@ public class HomeController {
 		});
 		
 		linkLogout.setOnAction(e -> {
+			try {
+				AnchorPane pane = FXMLLoader.load(getClass().getResource
+				  ("/views/Login.fxml"));
+				root.setCenter(pane);
+
+				System.out.println("Employee " + user.getString(1) +
+						" logged out on " + new Date());
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
 			
+			user = null;
 		});
 		
 	}

@@ -3,7 +3,6 @@ package application;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.Statement;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
@@ -13,16 +12,16 @@ import javafx.scene.layout.BorderPane;
 
 public class TireShop extends Application {
 	
-	private static Stage primaryStage;
+	//private static Stage primaryStage;
 	private static BorderPane root;
-	private static Statement statement;
+	private static Connection connection;
 	
 	@Override
 	public void start(Stage primaryStage) throws IOException {
 		
 		initializeDB();
 
-		TireShop.primaryStage = primaryStage;
+		//TireShop.primaryStage = primaryStage;
 		
 		root = new BorderPane();
 		
@@ -44,12 +43,9 @@ public class TireShop extends Application {
 			System.out.println("Driver loaded");
 			
 			// Establish a connection
-			Connection connection = DriverManager.getConnection
-			  ("jdbc:mysql://localhost/", "", "");	// Add your own database credentials
+			connection = DriverManager.getConnection
+			  ("jdbc:mysql://localhost/tireshop", "root", "csc");
 			System.out.println("Database connected");
-			
-			// Create a statement
-			statement = connection.createStatement();
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
@@ -57,16 +53,16 @@ public class TireShop extends Application {
 		
 	}
 
-	public static Stage getPrimaryStage() {
-		return TireShop.primaryStage;
-	}
+	//public static Stage getPrimaryStage() {
+		//return TireShop.primaryStage;
+	//}
 	
 	public static BorderPane getRoot() {
 		return TireShop.root;
 	}
 	
-	public static Statement getStatement() {
-		return TireShop.statement;
+	public static Connection getConnection() {
+		return TireShop.connection;
 	}
 	
 	public static void main(String[] args) {
