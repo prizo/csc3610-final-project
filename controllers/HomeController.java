@@ -36,7 +36,7 @@ public class HomeController {
 	private void initialize() {
 		
 		try {
-			txtInfo.setText("Logged in as " + user.getString(1) + " on " + new Date());
+			txtInfo.setText("Logged in as " + user.getString("firstName") + " " + user.getString("lastName") + " on " + new Date());
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
@@ -77,7 +77,7 @@ public class HomeController {
 				  ("/views/Login.fxml"));
 				root.setCenter(pane);
 
-				System.out.println("Employee " + user.getString(1) +
+				System.out.println("Employee " + user.getString("firstName") + " " + user.getString("lastName") +
 						" logged out on " + new Date());
 			} catch (Exception ex) {
 				ex.printStackTrace();
