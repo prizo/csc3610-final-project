@@ -10,7 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 
-public class TireShop extends Application {
+public class Main extends Application {
 	
 	//private static Stage primaryStage;
 	private static BorderPane root;
@@ -21,7 +21,7 @@ public class TireShop extends Application {
 		
 		initializeDB();
 
-		//TireShop.primaryStage = primaryStage;
+		//Main.primaryStage = primaryStage;
 		
 		root = new BorderPane();
 		
@@ -44,7 +44,7 @@ public class TireShop extends Application {
 			
 			// Establish a connection
 			connection = DriverManager.getConnection
-					  ("jdbc:mysql://localhost/tiregroup", "csc_student", "csc3610");
+					  ("jdbc:mysql://localhost/tiregroup", "root", "csc");
 			System.out.println("Database connected");
 		}
 		catch (Exception ex) {
@@ -54,15 +54,15 @@ public class TireShop extends Application {
 	}
 
 	//public static Stage getPrimaryStage() {
-		//return TireShop.primaryStage;
+		//return Main.primaryStage;
 	//}
 	
 	public static BorderPane getRoot() {
-		return TireShop.root;
+		return Main.root;
 	}
 	
 	public static Connection getConnection() {
-		return TireShop.connection;
+		return Main.connection;
 	}
 	
 	public static void main(String[] args) {

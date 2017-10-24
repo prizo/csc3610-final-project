@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 
-import application.TireShop;
+import application.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -25,8 +25,8 @@ import javafx.scene.layout.BorderPane;
 
 public class InvoiceController {
 	
-	BorderPane root = TireShop.getRoot();
-	Connection con = TireShop.getConnection();
+	BorderPane root = Main.getRoot();
+	Connection con = Main.getConnection();
 	
 	@FXML
 	private ListView<String> tireView;

@@ -5,7 +5,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import application.TireShop;
+import application.Main;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
@@ -18,8 +18,8 @@ import javafx.scene.layout.BorderPane;
 
 public class LoginController {
 	
-	BorderPane root = TireShop.getRoot();
-	Connection connection = TireShop.getConnection();
+	BorderPane root = Main.getRoot();
+	Connection connection = Main.getConnection();
 	
 	// Access user throughout application
 	public static ResultSet user;

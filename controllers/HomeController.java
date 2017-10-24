@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
-import application.TireShop;
+import application.Main;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Hyperlink;
@@ -14,7 +14,7 @@ import javafx.scene.text.Text;
 
 public class HomeController {
 	
-	BorderPane root = TireShop.getRoot();
+	BorderPane root = Main.getRoot();
 	ResultSet user = LoginController.getUser();
 	
 	@FXML
