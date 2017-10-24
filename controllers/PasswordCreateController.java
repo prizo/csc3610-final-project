@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
 import org.apache.commons.codec.digest.DigestUtils;
-import application.TireShop;
+import application.Main;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
@@ -21,8 +21,8 @@ import java.util.regex.Matcher;
 
 public class PasswordCreateController {
 	
-	BorderPane root = TireShop.getRoot();
-	Connection connection = TireShop.getConnection();
+	BorderPane root = Main.getRoot();
+	Connection connection = Main.getConnection();
 	ResultSet user = LoginController.getUser();
 	
 	@FXML
