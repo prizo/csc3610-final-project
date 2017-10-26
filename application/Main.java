@@ -44,7 +44,7 @@ public class Main extends Application {
 			
 			// Establish a connection
 			connection = DriverManager.getConnection
-					  ("jdbc:mysql://localhost/tiregroup", "root", "csc");
+					  ("jdbc:mysql://localhost/TireGroup", "root", "");
 			System.out.println("Database connected");
 		}
 		catch (Exception ex) {
