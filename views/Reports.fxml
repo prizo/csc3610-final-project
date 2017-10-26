@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+
+<AnchorPane prefHeight="701.0" prefWidth="720.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.102">
+   <children>
+      <Pane layoutX="-1.0" prefHeight="701.0" prefWidth="720.0">
+         <children>
+            <Button fx:id="btnBack" layoutX="57.0" layoutY="37.0" mnemonicParsing="false" text="Back" />
+            <TableView fx:id="table" layoutX="31.0" layoutY="137.0" prefHeight="483.0" prefWidth="657.0" />
+            <Button fx:id="tireButton" layoutX="245.0" layoutY="47.0" mnemonicParsing="false" text="Tires" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

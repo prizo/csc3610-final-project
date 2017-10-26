@@ -111,6 +111,13 @@ public class InvoiceController {
 			Customer invoiceCust = CheckCustomer();
 			Order invoiceOrder = CheckOrder();
 			Invoice invoice = CheckInvoice(invoiceCust, invoiceOrder);
+			
+			String invoiceString = 	("First Name: " + firstName.getText() + "\nLast Name: " + lastName.getText() + "\nPhone Number: " + 
+					phoneNumber.getText() + "\nEmail: " + em.getText()+ "\nTire Name: " + tireName.getText() +
+					"\nTire Brand: " + tireBrand.getText()  + "\nRim Diameter: " + rimDiameter.getText() +
+					"\nQuantity: " + tireQuantity.getText() + "\nTire Price: " + tirePrice.getText() +
+					"\nLabor Cost : $" + laborCost.getText());
+			txtinvoice.setText(invoiceString);
 			ClearFields();
 		});
 
