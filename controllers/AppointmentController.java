@@ -1,7 +1,7 @@
 package controllers;
 
 import java.io.IOException;
-import application.Main;
+import application.TireShop;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -10,7 +10,7 @@ import javafx.scene.layout.BorderPane;
 
 public class AppointmentController {
 	
-BorderPane root = Main.getRoot();
+BorderPane root = TireShop.getRoot();
 	
 	@FXML
 	private Button btnBack;

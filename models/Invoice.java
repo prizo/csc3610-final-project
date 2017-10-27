@@ -9,16 +9,14 @@ public class Invoice {
 	private int customerID;		// FK
 	private int employeeID;		// FK
 	private int orderID;		// FK
-	private int tireID;			// FK
 	
 	// Constructor for receiving objects from database
-	public Invoice(int invoiceID, Date invoiceDate, int customerID, int employeeID, int orderID, int tireID) {
+	public Invoice(int invoiceID, Date invoiceDate, int customerID, int employeeID, int orderID) {
 		this.invoiceID = invoiceID;
 		this.invoiceDate = invoiceDate;
 		this.customerID = customerID;
 		this.employeeID = employeeID;
 		this.orderID = orderID;
-		this.tireID = tireID;
 	}
 
 	// Constructor for inserting objects into database
@@ -27,7 +25,6 @@ public class Invoice {
 		this.customerID = customerID;
 		this.employeeID = employeeID;
 		this.orderID = orderID;
-		this.tireID = tireID;
 	}
 
 	public int getInvoiceID() {
@@ -50,14 +47,10 @@ public class Invoice {
 		return orderID;
 	}
 
-	public int getTireID() {
-		return tireID;
-	}
-
 	@Override
 	public String toString() {
 		return "Invoice [invoiceID=" + invoiceID + ", invoiceDate=" + invoiceDate + ", customerID=" + customerID
-				+ ", employeeID=" + employeeID + ", orderID=" + orderID + ", tireID=" + tireID + "]";
+				+ ", employeeID=" + employeeID + ", orderID=" + orderID + "]";
 	}
 
 }

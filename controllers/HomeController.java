@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
-import application.Main;
+import application.TireShop;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Hyperlink;
@@ -14,7 +14,7 @@ import javafx.scene.text.Text;
 
 public class HomeController {
 	
-	BorderPane root = Main.getRoot();
+	BorderPane root = TireShop.getRoot();
 	ResultSet user = LoginController.getUser();
 	
 	@FXML
@@ -36,7 +36,7 @@ public class HomeController {
 	private void initialize() {
 		
 		try {
-			txtInfo.setText("Logged in as " + user.getString(1) + " on " + new Date());
+			txtInfo.setText("Logged in as " + user.getString("firstName") + " " + user.getString("lastName") + " on " + new Date());
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
@@ -77,7 +77,7 @@ public class HomeController {
 				  ("/views/Login.fxml"));
 				root.setCenter(pane);
 
-				System.out.println("Employee " + user.getString(1) +
+				System.out.println("Employee " + user.getString("firstName") + " " + user.getString("lastName") +
 						" logged out on " + new Date());
 			} catch (Exception ex) {
 				ex.printStackTrace();

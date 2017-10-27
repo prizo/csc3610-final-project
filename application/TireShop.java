@@ -10,7 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 
-public class Main extends Application {
+public class TireShop extends Application {
 	
 	//private static Stage primaryStage;
 	private static BorderPane root;
@@ -21,11 +21,11 @@ public class Main extends Application {
 		
 		initializeDB();
 
-		//Main.primaryStage = primaryStage;
+		//TireShop.primaryStage = primaryStage;
 		
 		root = new BorderPane();
 		
-		AnchorPane pane = FXMLLoader.load(getClass().getResource("/views/Login.fxml"));
+		AnchorPane pane = FXMLLoader.load(getClass().getResource("/views/Dashboard.fxml"));
 		root.setCenter(pane);
 		
 		Scene scene = new Scene(root);
@@ -54,15 +54,15 @@ public class Main extends Application {
 	}
 
 	//public static Stage getPrimaryStage() {
-		//return Main.primaryStage;
+		//return TireShop.primaryStage;
 	//}
 	
 	public static BorderPane getRoot() {
-		return Main.root;
+		return TireShop.root;
 	}
 	
 	public static Connection getConnection() {
-		return Main.connection;
+		return TireShop.connection;
 	}
 	
 	public static void main(String[] args) {

@@ -19,6 +19,6 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </TextField>
-      <Button fx:id="btnEnter" layoutX="134.0" layoutY="252.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="91.0" text="Enter" />
+      <Button fx:id="btnEnter" layoutX="134.0" layoutY="252.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="91.0" text="Log In" />
    </children>
 </AnchorPane>

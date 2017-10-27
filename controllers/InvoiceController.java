@@ -1,43 +1,50 @@
 package controllers;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
-
-import application.Main;
+import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import application.TireShop;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import models.Customer;
+import models.Invoice;
+import models.Order;
 
 public class InvoiceController {
-	
-	BorderPane root = Main.getRoot();
-	Connection con = Main.getConnection();
-	
+
+	BorderPane root = TireShop.getRoot();
+	Connection con = TireShop.getConnection();
+	ResultSet user = LoginController.getUser();
+
 	@FXML
 	private ListView<String> tireView;
-	@FXML private ComboBox<String> cmbTireBrand;
+	@FXML
+	private ComboBox<String> cmbTireBrand;
 	@FXML
 	private ObservableList<String> tireNameList = FXCollections.observableArrayList();
 	@FXML
 	private ObservableList<String> tireBrandList = FXCollections.observableArrayList();
 	@FXML
 	private TextField tireBrand, tireName, rimDiameter, firstName, lastName, phoneNumber, tireQuantity, tirePrice,
-			laborCost, em;
+			laborCost, em, tireID;
 	@FXML
 	private TextArea txtinvoice;
 	@FXML
@@ -47,15 +54,16 @@ public class InvoiceController {
 
 	@FXML
 	private void initialize() throws ClassNotFoundException, SQLException {
-		
-//		setTireNames();
+
+		// setTireNames();
 		setTireBrands();
-		
+
 		tireView.setOnMouseClicked(e -> {
 
 			try {
-				String query = "select * from tires where name = '" + tireView.getSelectionModel().getSelectedItem() + "'";
-				
+				String query = "select * from tires where name = '" + tireView.getSelectionModel().getSelectedItem()
+						+ "'";
+
 				Statement statement = con.createStatement();
 				// Queries the database for the selected item
 				ResultSet results = statement.executeQuery(query);
@@ -65,20 +73,22 @@ public class InvoiceController {
 					tireBrand.setText(results.getString("brand"));
 					rimDiameter.setText(results.getString("rimdiameter"));
 					tirePrice.setText("$" + results.getString("price"));
+					tireID.setText(results.getString("tireID"));
 				}
 			} catch (SQLException e1) {
 				e1.printStackTrace();
-			} 
+			}
 		});
 
 		clearButton.setOnAction((event) -> {
 			ClearFields();
 
 		});
-		cmbTireBrand.setOnAction((event) ->{
+		cmbTireBrand.setOnAction((event) -> {
 			try {
 				Statement statement = con.createStatement();
-				String query = "select * from tires where brand = '" + cmbTireBrand.getSelectionModel().getSelectedItem() + "'";
+				String query = "select * from tires where brand = '"
+						+ cmbTireBrand.getSelectionModel().getSelectedItem() + "'";
 				ResultSet results = statement.executeQuery(query);
 				// Fills in the data fields with the queried items attributes
 				tireNameList.removeAll(tireNameList);
@@ -86,53 +96,33 @@ public class InvoiceController {
 					tireNameList.add(results.getString("name"));
 				}
 				tireView.setItems(tireNameList);
-			} catch (SQLException  e1) {
-				e1.printStackTrace();
-			} 
-		});
-		
-/*		allTiresButton.setOnAction((event) ->{
-			try {
-				setTireNames();
-			} catch (ClassNotFoundException | SQLException e1) {
+			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
 		});
-*/	
+
+		/*
+		 * allTiresButton.setOnAction((event) ->{ try { setTireNames(); } catch
+		 * (ClassNotFoundException | SQLException e1) { e1.printStackTrace(); } });
+		 */
 		saveButton.setOnAction((event) -> {
-			//String fname = firstName.getText().toString();// sets fxml text obkect to string from textfield
-			//String lname = lastName.getText().toString();// sets fxml text obkect to string from textfield
-			//String email = em.getText().toString();// sets fxml text obkect to string from textfield
-			//String phone = phoneNumber.getText().toString();// sets fxml text obkect to string from textfield
 
-			// print out info in console for testing
-			//System.out.println("First Name: " + fname + "\n" + "Last Name: " + lname + "\n" + "Phone Number: " + phone
-			//		+ "\n" + "Email: " + email + "\n");
-			// gathers data entered from textfields -- puts in invoice text area;
-			String invoice = 	("First Name: " + firstName.getText() + "\nLast Name: " + lastName.getText() + "\nPhone Number: " + 
-								phoneNumber.getText() + "\nEmail: " + em.getText()+ "\nTire Name: " + tireName.getText() +
-								"\nTire Brand: " + tireBrand.getText()  + "\nRim Diameter: " + rimDiameter.getText() +
-								"\nQuantity: " + tireQuantity.getText() + "\nTire Price: " + tirePrice.getText() +
-								"\nLabor Cost : $" + laborCost.getText());
-			txtinvoice.setText(invoice);
-			// Writes the string to a xls file
-			try {
-
-				FileWriter fw = new FileWriter("Customer_Info.txt", true);
-				BufferedWriter bw = new BufferedWriter(fw);
-				bw.write(invoice);
-				bw.close();
-
-			} catch (IOException e) {
-				System.out.println("The file was not created");
-			}
+			Customer invoiceCust = CheckCustomer();
+			Order invoiceOrder = CheckOrder();
+			Invoice invoice = CheckInvoice(invoiceCust, invoiceOrder);
+			
+			String invoiceString = 	("First Name: " + firstName.getText() + "\nLast Name: " + lastName.getText() + "\nPhone Number: " + 
+					phoneNumber.getText() + "\nEmail: " + em.getText()+ "\nTire Name: " + tireName.getText() +
+					"\nTire Brand: " + tireBrand.getText()  + "\nRim Diameter: " + rimDiameter.getText() +
+					"\nQuantity: " + tireQuantity.getText() + "\nTire Price: " + tirePrice.getText() +
+					"\nLabor Cost : $" + laborCost.getText());
+			txtinvoice.setText(invoiceString);
 			ClearFields();
 		});
-		
+
 		backButton.setOnAction(e -> {
 			try {
-				AnchorPane pane = FXMLLoader.load(getClass().getResource
-				  ("/views/Home.fxml"));
+				AnchorPane pane = FXMLLoader.load(getClass().getResource("/views/Home.fxml"));
 				root.setCenter(pane);
 			} catch (IOException ex) {
 				ex.printStackTrace();
@@ -140,28 +130,167 @@ public class InvoiceController {
 		});
 	}
 
-/*	private void setTireNames() throws ClassNotFoundException, SQLException {
-		Statement statement = con.createStatement();
-		ResultSet rs = statement.executeQuery("Select * from tires order by name");
-		tireNameList.removeAll(tireNameList);
-		// Adds every name from tires to the name list
-		while (rs.next()) {
-			tireNameList.add(rs.getString("name"));
+
+
+	/*
+	 * private void setTireNames() throws ClassNotFoundException, SQLException {
+	 * Statement statement = con.createStatement(); ResultSet rs =
+	 * statement.executeQuery("Select * from tires order by name");
+	 * tireNameList.removeAll(tireNameList); // Adds every name from tires to the
+	 * name list while (rs.next()) { tireNameList.add(rs.getString("name")); } //
+	 * Loads the tire name list in to the tire view tireView.setItems(tireNameList);
+	 * }
+	 */
+	private Customer CheckCustomer() {
+		
+		StringBuilder errorMessage = new StringBuilder();
+		Pattern numberCheck = Pattern.compile	("((?=.*\\d))");
+		Pattern emailCheck = Pattern.compile("[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}");
+		Matcher firstNameMatch = numberCheck.matcher(firstName.getText());
+		Matcher lastNameMatch = numberCheck.matcher(lastName.getText());
+		Matcher phoneNumberMatch = numberCheck.matcher(phoneNumber.getText());
+		Matcher emailMatch = emailCheck.matcher(em.getText());
+/*		
+		if (firstNameMatch.matches() || firstName.getText().length() == 0) {
+			errorMessage.append("First name can't contain a number.\n");			
 		}
-		// Loads the tire name list in to the tire view
-		tireView.setItems(tireNameList);
+		
+		if (lastNameMatch.matches() || lastName.getText().length() == 0) {
+			errorMessage.append("Last name can't contain a number.\n");
 		}
-*/	
+		if (!phoneNumberMatch.matches() || phoneNumber.getText().length() == 0) {
+			errorMessage.append("Phone number has to have numbers.\n");
+		}
+		if (!emailMatch.matches() || em.getText().length() == 0) {
+			errorMessage.append("Email is not in a valid format.\n");
+		}	
+*/		
+		if (errorMessage.length() != 0){
+			Alert alert = new Alert(AlertType.ERROR, errorMessage.toString() );
+			alert.showAndWait();
+		}
+
+		else {
+			try {
+				String query = " insert into customers (firstName, lastName, phoneNumber, email)"
+				        + " values (?, ?, ?, ?)";
+
+				      PreparedStatement preparedStmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+				      preparedStmt.setString (1, firstName.getText());
+				      preparedStmt.setString (2, lastName.getText());
+				      preparedStmt.setString (3, phoneNumber.getText());
+				      preparedStmt.setString (4, em.getText());
+				      
+				      preparedStmt.execute();
+				      ResultSet rs = preparedStmt.getGeneratedKeys();
+				      if(rs.next()) {
+					      int customerID = rs.getInt(1);
+					      Customer cust = new Customer(customerID, firstName.getText(), lastName.getText(), phoneNumber.getText(), em.getText());
+					      rs.close();
+					      preparedStmt.close();
+					      return cust;
+				      }
+			
+			} catch (SQLException ex) {
+				ex.printStackTrace();
+			}
+		}
+		return null;
+		
+	}
+	
+	private Order CheckOrder() {
+		
+		StringBuilder errorMessage = new StringBuilder();
+		
+		if (tireName.getText().length() == 0) {
+			errorMessage.append("Select a tire.\n");
+		}
+		
+		if (tireQuantity.getText().length() == 0) {
+			errorMessage.append("Enter a quantity.\n");
+		}
+		
+		if (laborCost.getText().length() == 0) {
+			errorMessage.append("Enter a labor cost.\n");
+		}
+		
+		if (errorMessage.length() != 0){
+			Alert alert = new Alert(AlertType.ERROR, errorMessage.toString() );
+			alert.showAndWait();
+		}
+		
+		else {
+			try {
+				String query = " insert into orders (tireID, orderDate, quantity, laborCost)"
+				        + " values (?, ?, ?, ?)";
+				Date orderDate = new Date();
+				java.sql.Date sqlOrderDate = new java.sql.Date(orderDate.getTime());
+				      PreparedStatement preparedStmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+				      preparedStmt.setString (1, tireID.getText());
+				      preparedStmt.setDate (2, (java.sql.Date) sqlOrderDate);
+				      preparedStmt.setString (3, tireQuantity.getText());		
+				      preparedStmt.setDouble(4, Double.parseDouble(laborCost.getText()));
+				      preparedStmt.execute();		
+				      ResultSet rs = preparedStmt.getGeneratedKeys();
+				      if(rs.next()) {
+					      int orderID = rs.getInt(1);
+					      Order order = new Order(orderID, sqlOrderDate, Integer.parseInt(tireQuantity.getText()), Double.parseDouble(laborCost.getText()), Integer.parseInt(tireID.getText()));
+					      rs.close();
+					      preparedStmt.close();
+					      return order;
+				      }
+			}
+			
+			 catch (SQLException ex) {
+				ex.printStackTrace();
+			}
+		}
+		return null;
+	}
+	
+	private Invoice CheckInvoice(Customer cust, Order order) {
+		try {
+			String query = " insert into invoices (employeeID, customerID, orderID, invoiceDate)"
+			        + " values (?, ?, ?, ?)";
+			Date invoiceDate = new Date();
+			java.sql.Date sqlInvoiceDate = new java.sql.Date(invoiceDate.getTime());
+			      PreparedStatement preparedStmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+			      preparedStmt.setInt (1, user.getInt("employeeID"));
+			      preparedStmt.setInt (2, cust.getCustomerID());
+			      preparedStmt.setInt (3, order.getOrderID());	
+			      preparedStmt.setDate(4, sqlInvoiceDate);
+			      preparedStmt.execute();		
+			      ResultSet rs = preparedStmt.getGeneratedKeys();
+			      if(rs.next()) {
+				      int invoiceID = rs.getInt(1);
+				      Invoice invoice = new Invoice(invoiceID, sqlInvoiceDate, cust.getCustomerID(), user.getInt("employeeID"), order.getOrderID());		      
+				      rs.close();
+				      preparedStmt.close();
+				      return invoice;
+			      }
+		}
+		
+		 catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+		
+		
+
+		return null;
+	}
+	
 	private void setTireBrands() throws ClassNotFoundException, SQLException {
 		Statement statement = con.createStatement();
 		ResultSet rs = statement.executeQuery("Select distinct brand from tires order by brand");
 		tireBrandList.removeAll(tireBrandList);
-		while(rs.next()) {
+		while (rs.next()) {
 			tireBrandList.add(rs.getString("brand"));
 		}
 		// Loads the tire brand list in to the tire brand
 		cmbTireBrand.setItems(tireBrandList);
 	}
+
 	private void ClearFields() {
 		tireName.clear();
 		tireBrand.clear();

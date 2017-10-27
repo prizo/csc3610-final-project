@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
 import org.apache.commons.codec.digest.DigestUtils;
-import application.Main;
+import application.TireShop;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
@@ -21,8 +21,8 @@ import java.util.regex.Matcher;
 
 public class PasswordCreateController {
 	
-	BorderPane root = Main.getRoot();
-	Connection connection = Main.getConnection();
+	BorderPane root = TireShop.getRoot();
+	Connection connection = TireShop.getConnection();
 	ResultSet user = LoginController.getUser();
 	
 	@FXML
@@ -43,7 +43,7 @@ public class PasswordCreateController {
 		btnCreate.setOnAction(e -> {
 			String id = "";
 			try {
-				id = user.getString(6);
+				id = user.getString("employeeID");
 			} catch (SQLException ex) {
 				ex.printStackTrace();
 			}
@@ -73,7 +73,7 @@ public class PasswordCreateController {
 					  ("/views/Home.fxml"));
 					root.setCenter(pane);
 					
-					System.out.println("Employee " + user.getString(1) +
+					System.out.println("Employee " + user.getString("employeeID") +
 							" logged in on " + new Date());
 				} catch (Exception ex) {
 					ex.printStackTrace();

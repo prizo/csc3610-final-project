@@ -1,5 +1,13 @@
 /Appointment.class
+<<<<<<< HEAD
 /Invoice.class
 /Customer.class
 /Employee.class
 /Order.class
+=======
+/Customer.class
+/Employee.class
+/Invoice.class
+/Order.class
+/OldEmployee.class
+>>>>>>> 40df8badadc9493d0dddbc490c892416919db786

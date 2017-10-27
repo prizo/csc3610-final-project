@@ -5,7 +5,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import application.Main;
+import application.TireShop;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
@@ -18,8 +18,8 @@ import javafx.scene.layout.BorderPane;
 
 public class LoginController {
 	
-	BorderPane root = Main.getRoot();
-	Connection connection = Main.getConnection();
+	BorderPane root = TireShop.getRoot();
+	Connection connection = TireShop.getConnection();
 	
 	// Access user throughout application
 	public static ResultSet user;
@@ -51,7 +51,7 @@ public class LoginController {
 				user = statement.executeQuery(query);
 				
 				if (user.next()) {
-					if (user.getString(4) == null) {
+					if (user.getString("password") == null) {
 						try {
 							AnchorPane pane = FXMLLoader.load(getClass().getResource
 							  ("/views/PasswordCreate.fxml"));
@@ -71,6 +71,7 @@ public class LoginController {
 					}
 				}
 				else {
+					txtID.clear();
 					Alert alert = new Alert(AlertType.ERROR, "Invalid ID!");
 					alert.showAndWait();
 				}

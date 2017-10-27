@@ -13,7 +13,7 @@
             <Image url="@Tireshop.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnLogin" layoutX="161.0" layoutY="301.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="104.0" text="Log In" />
-      <PasswordField fx:id="txtPassword" layoutX="120.0" layoutY="237.0" promptText="Password" />
+      <PasswordField fx:id="txtPassword" layoutX="110.0" layoutY="249.0" promptText="Password" />
+      <Button fx:id="btnLogin" layoutX="161.0" layoutY="301.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="104.0" text="Login" />
    </children>
 </AnchorPane>

@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 import org.apache.commons.codec.digest.DigestUtils;
-import application.Main;
+import application.TireShop;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
@@ -18,8 +18,8 @@ import javafx.scene.layout.BorderPane;
 
 public class PasswordLoginController {
 	
-	BorderPane root = Main.getRoot();
-	Connection connection = Main.getConnection();
+	BorderPane root = TireShop.getRoot();
+	Connection connection = TireShop.getConnection();
 	ResultSet user = LoginController.getUser();
 	
 	@FXML
@@ -43,7 +43,7 @@ public class PasswordLoginController {
 			// Retrieve user password from database
 			String userPassword = null;
 			try {
-				userPassword = user.getString(4);
+				userPassword = user.getString("password");
 			} catch (SQLException ex) {
 				ex.printStackTrace();
 			}
@@ -58,13 +58,14 @@ public class PasswordLoginController {
 					  ("/views/Home.fxml"));
 					root.setCenter(pane);
 
-					System.out.println("Employee " + user.getString(1) +
+					System.out.println("Employee " + user.getString("firstName") + " " + user.getString("lastName") +
 							" logged in on " + new Date());
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}
 			}
 			else {
+				txtPassword.clear();
 				Alert alert = new Alert(AlertType.ERROR, "Password incorrect!");
 				alert.showAndWait();
 			}	
