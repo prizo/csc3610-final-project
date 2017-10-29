@@ -2,7 +2,6 @@ package reports;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -21,9 +20,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.util.Callback;
-import models.Employee;
+import models.Tire;
 
-public class EmployeeReportController {
+public class TireReportController {
 
 	BorderPane root = TireShop.getRoot();
 	Connection con = TireShop.getConnection();
@@ -31,76 +30,74 @@ public class EmployeeReportController {
 	@FXML
 	private TextField sumField;
 	@FXML
-	private TableView<Employee> employeeTable;
+	private TableView<Tire> tireTable;
 	@FXML
-	private TableColumn<Employee, Integer> employeeIDColumn;
+	private TableColumn<Tire, Integer> tireIDColumn;
 	@FXML
-	private TableColumn<Employee, String> firstNameColumn;
+	private TableColumn<Tire, String> nameColumn;
 	@FXML
-	private TableColumn<Employee, String> lastNameColumn;
+	private TableColumn<Tire, String> brandColumn;
 	@FXML
-	private TableColumn<Employee, Date> startDateColumn;
+	private TableColumn<Tire, Integer> rimDiameterColumn;
 	@FXML
-	private TableColumn<Employee, Boolean> isAdminColumn;
+	private TableColumn<Tire, Double> priceColumn;
 	@FXML
-	private ObservableList<Employee> masterData = FXCollections.observableArrayList();
+	private ObservableList<Tire> masterData = FXCollections.observableArrayList();
 	@FXML
 	private Button backButton, employeeButton, tireButton, customerButton, orderButton, invoiceButton;
 	@FXML
 	private void initialize() {
 
-		String query = "Select * from employees";
+		String query = "Select * from tires";
 		ResultSet rs;
 		try {
 			rs = con.createStatement().executeQuery(query);
 			while (rs.next()) {
-				//Creates an employee using data from the database then adds it to masterData
-				Employee emp = new Employee(rs.getInt("employeeID"), rs.getString("firstName"),
-						rs.getString("lastName"), rs.getString("password"), rs.getDate("startDate"),
-						rs.getBoolean("isAdmin"));
-				masterData.add(emp);
+				
+				Tire test= new Tire(rs.getInt("tireID"), rs.getString("name"),
+						rs.getDouble("price"), rs.getString("brand"), rs.getInt("rimDiameter"));
+				masterData.add(test);
 			}
+			System.out.println(masterData.size());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		//Sets the list of employees in to the table
-		employeeTable.setItems(masterData);
-		
-		//Assigns the employees values in to the columns
-		employeeIDColumn.setCellValueFactory(new Callback<CellDataFeatures<Employee, Integer>, ObservableValue<Integer>>(){
-			public ObservableValue<Integer> call(CellDataFeatures<Employee, Integer> p) {
-				ObservableValue<Integer> obs = new ReadOnlyObjectWrapper<>(p.getValue().getEmployeeID());
+		tireTable.setItems(masterData);
+		tireIDColumn.setCellValueFactory(new Callback<CellDataFeatures<Tire, Integer>, ObservableValue<Integer>>(){
+			public ObservableValue<Integer> call(CellDataFeatures<Tire, Integer> p) {
+				ObservableValue<Integer> obs = new ReadOnlyObjectWrapper<>(p.getValue().getTireID());
 				return obs;
 			}
 		});
 		
-		firstNameColumn.setCellValueFactory(new Callback<CellDataFeatures<Employee, String>, ObservableValue<String>>(){
-			public ObservableValue<String> call(CellDataFeatures<Employee, String> p) {
-				ObservableValue<String> obs = new ReadOnlyObjectWrapper<>(p.getValue().getFirstName());
+		nameColumn.setCellValueFactory(new Callback<CellDataFeatures<Tire, String>, ObservableValue<String>>(){
+			public ObservableValue<String> call(CellDataFeatures<Tire, String> p) {
+				ObservableValue<String> obs = new ReadOnlyObjectWrapper<>(p.getValue().getName());
 				return obs;
 			}
 		});
 		
-		lastNameColumn.setCellValueFactory(new Callback<CellDataFeatures<Employee, String>, ObservableValue<String>>(){
-			public ObservableValue<String> call(CellDataFeatures<Employee, String> p) {
-				ObservableValue<String> obs = new ReadOnlyObjectWrapper<>(p.getValue().getLastName());
+		brandColumn.setCellValueFactory(new Callback<CellDataFeatures<Tire, String>, ObservableValue<String>>(){
+			public ObservableValue<String> call(CellDataFeatures<Tire, String> p) {
+				ObservableValue<String> obs = new ReadOnlyObjectWrapper<>(p.getValue().getBrand());
 				return obs;
 			}
 		});
 		
-		startDateColumn.setCellValueFactory(new Callback<CellDataFeatures<Employee, Date>, ObservableValue<Date>>(){
-			public ObservableValue<Date> call(CellDataFeatures<Employee, Date> p) {
-				ObservableValue<Date> obs = new ReadOnlyObjectWrapper<>(p.getValue().getStartDate());
+		rimDiameterColumn.setCellValueFactory(new Callback<CellDataFeatures<Tire, Integer>, ObservableValue<Integer>>(){
+			public ObservableValue<Integer> call(CellDataFeatures<Tire, Integer> p) {
+				ObservableValue<Integer> obs = new ReadOnlyObjectWrapper<>(p.getValue().getRimDiameter());
 				return obs;
 			}
 		});
 		
-		isAdminColumn.setCellValueFactory(new Callback<CellDataFeatures<Employee, Boolean>, ObservableValue<Boolean>>(){
-			public ObservableValue<Boolean> call(CellDataFeatures<Employee, Boolean> p) {
-				ObservableValue<Boolean> obs = new ReadOnlyObjectWrapper<>(p.getValue().isAdmin());
+		priceColumn.setCellValueFactory(new Callback<CellDataFeatures<Tire, Double>, ObservableValue<Double>>(){
+			public ObservableValue<Double> call(CellDataFeatures<Tire, Double> p) {
+				ObservableValue<Double> obs = new ReadOnlyObjectWrapper<>(p.getValue().getPrice());
 				return obs;
 			}
 		});
+
 
 		sumField.setText(Integer.toString(masterData.size()));
 		

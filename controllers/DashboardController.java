@@ -32,7 +32,7 @@ BorderPane root = TireShop.getRoot();
 		reportsButton.setOnAction(e -> {
 			try {
 				AnchorPane pane = FXMLLoader.load(getClass().getResource
-				  ("/views/EmployeeReport.fxml"));
+				  ("/reports/EmployeeReport.fxml"));
 				root.setCenter(pane);
 			} catch (IOException ex) {
 				ex.printStackTrace();
