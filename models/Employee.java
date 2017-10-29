@@ -2,8 +2,6 @@ package models;
 
 import java.sql.Date;
 
-import javafx.beans.value.ObservableValue;
-
 public class Employee {
 	
 	private int employeeID;		// PK
@@ -12,13 +10,6 @@ public class Employee {
 	private String password;
 	private Date startDate;
 	private boolean isAdmin;
-	
-	private ObservableValue<Integer> employeeIDProperty;
-	private ObservableValue<String> firstNameProperty;
-	private ObservableValue<String> lastNameProperty;
-	private ObservableValue<String> passwordProperty;
-	private ObservableValue<Date> startDateProperty;
-	private ObservableValue<Boolean> isAdminProperty;
 	
 	// Constructor for receiving objects from database
 	public Employee(int employeeID, String firstName, String lastName, String password, Date startDate,boolean isAdmin) {
@@ -40,53 +31,6 @@ public class Employee {
 	}
 
 	
-	public ObservableValue<Integer> getEmployeeIDProperty() {
-		return employeeIDProperty;
-	}
-
-	public void setEmployeeIDProperty(ObservableValue<Integer> employeeIDProperty) {
-		this.employeeIDProperty = employeeIDProperty;
-	}
-
-	public ObservableValue<String> getFirstNameProperty() {
-		return firstNameProperty;
-	}
-
-	public void setFirstNameProperty(ObservableValue<String> firstNameProperty) {
-		this.firstNameProperty = firstNameProperty;
-	}
-
-	public ObservableValue<String> getLastNameProperty() {
-		return lastNameProperty;
-	}
-
-	public void setLastNameProperty(ObservableValue<String> lastNameProperty) {
-		this.lastNameProperty = lastNameProperty;
-	}
-
-	public ObservableValue<String> getPasswordProperty() {
-		return passwordProperty;
-	}
-
-	public void setPasswordProperty(ObservableValue<String> passwordProperty) {
-		this.passwordProperty = passwordProperty;
-	}
-
-	public ObservableValue<Date> getStartDateProperty() {
-		return startDateProperty;
-	}
-
-	public void setStartDateProperty(ObservableValue<Date> startDateProperty) {
-		this.startDateProperty = startDateProperty;
-	}
-
-	public ObservableValue<Boolean> getIsAdminProperty() {
-		return isAdminProperty;
-	}
-
-	public void setIsAdminProperty(ObservableValue<Boolean> isAdminProperty) {
-		this.isAdminProperty = isAdminProperty;
-	}
 
 	public int getEmployeeID() {
 		return employeeID;
