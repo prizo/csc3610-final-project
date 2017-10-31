@@ -54,9 +54,9 @@ public class CustomerReportController {
 			rs = con.createStatement().executeQuery(query);
 			while (rs.next()) {
 				//Creates an customer using data from the database then adds it to masterData
-				Customer emp = new Customer(rs.getInt("customerID"), rs.getString("firstName"),
+				Customer test = new Customer(rs.getInt("customerID"), rs.getString("firstName"),
 						rs.getString("lastName"), rs.getString("phoneNumber"), rs.getString("email"));
-				masterData.add(emp);
+				masterData.add(test);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -105,7 +105,7 @@ public class CustomerReportController {
 		backButton.setOnAction(e -> {
 			try {
 				AnchorPane pane = FXMLLoader.load(getClass().getResource
-				  ("/reports/Home.fxml"));
+				  ("/views/Dashboard.fxml"));
 				root.setCenter(pane);
 			} catch (IOException ex) {
 				ex.printStackTrace();

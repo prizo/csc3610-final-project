@@ -55,9 +55,9 @@ public class InvoiceReportController {
 			rs = con.createStatement().executeQuery(query);
 			while (rs.next()) {
 				//Creates an invoice using data from the database then adds it to masterData
-				Invoice emp = new 	Invoice(rs.getInt("invoiceID"), rs.getDate("invoiceDate"), rs.getInt("customerID"),
+				Invoice test = new 	Invoice(rs.getInt("invoiceID"), rs.getDate("invoiceDate"), rs.getInt("customerID"),
 						 			rs.getInt("employeeID"), rs.getInt("orderID")); 
-				masterData.add(emp);
+				masterData.add(test);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -106,7 +106,7 @@ public class InvoiceReportController {
 		backButton.setOnAction(e -> {
 			try {
 				AnchorPane pane = FXMLLoader.load(getClass().getResource
-				  ("/reports/Home.fxml"));
+				  ("/views/Dashboard.fxml"));
 				root.setCenter(pane);
 			} catch (IOException ex) {
 				ex.printStackTrace();

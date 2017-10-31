@@ -58,7 +58,6 @@ public class TireReportController {
 						rs.getDouble("price"), rs.getString("brand"), rs.getInt("rimDiameter"));
 				masterData.add(test);
 			}
-			System.out.println(masterData.size());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -104,7 +103,7 @@ public class TireReportController {
 		backButton.setOnAction(e -> {
 			try {
 				AnchorPane pane = FXMLLoader.load(getClass().getResource
-				  ("/reports/Home.fxml"));
+				  ("/views/Dashboard.fxml"));
 				root.setCenter(pane);
 			} catch (IOException ex) {
 				ex.printStackTrace();

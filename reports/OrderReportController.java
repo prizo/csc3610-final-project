@@ -56,9 +56,9 @@ public class OrderReportController {
 			while (rs.next()) {
 				//Creates an order using data from the database then adds it to masterData
 				
-				Order emp = new Order(rs.getInt("orderID"), rs.getDate("orderDate"), rs.getInt("quantity"), 
+				Order test = new Order(rs.getInt("orderID"), rs.getDate("orderDate"), rs.getInt("quantity"), 
 							rs.getDouble("laborCost"), rs.getInt("tireID"));
-				masterData.add(emp);
+				masterData.add(test);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -107,7 +107,7 @@ public class OrderReportController {
 		backButton.setOnAction(e -> {
 			try {
 				AnchorPane pane = FXMLLoader.load(getClass().getResource
-				  ("/reports/Home.fxml"));
+				  ("/views/Dashboard.fxml"));
 				root.setCenter(pane);
 			} catch (IOException ex) {
 				ex.printStackTrace();

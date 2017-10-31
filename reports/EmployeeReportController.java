@@ -55,10 +55,10 @@ public class EmployeeReportController {
 			rs = con.createStatement().executeQuery(query);
 			while (rs.next()) {
 				//Creates an employee using data from the database then adds it to masterData
-				Employee emp = new Employee(rs.getInt("employeeID"), rs.getString("firstName"),
+				Employee test = new Employee(rs.getInt("employeeID"), rs.getString("firstName"),
 						rs.getString("lastName"), rs.getString("password"), rs.getDate("startDate"),
 						rs.getBoolean("isAdmin"));
-				masterData.add(emp);
+				masterData.add(test);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -107,7 +107,7 @@ public class EmployeeReportController {
 		backButton.setOnAction(e -> {
 			try {
 				AnchorPane pane = FXMLLoader.load(getClass().getResource
-				  ("/reports/Home.fxml"));
+				  ("/views/Dashboard.fxml"));
 				root.setCenter(pane);
 			} catch (IOException ex) {
 				ex.printStackTrace();
