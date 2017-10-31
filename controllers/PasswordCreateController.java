@@ -73,7 +73,7 @@ public class PasswordCreateController {
 					  ("/views/Home.fxml"));
 					root.setCenter(pane);
 					
-					System.out.println("Employee " + user.getString("employeeID") +
+					System.out.println("Employee " + user.getString("firstName") + " " + user.getString("lastName") +
 							" logged in on " + new Date());
 				} catch (Exception ex) {
 					ex.printStackTrace();

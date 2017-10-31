@@ -74,7 +74,7 @@ public class HomeController {
 		linkLogout.setOnAction(e -> {
 			try {
 				AnchorPane pane = FXMLLoader.load(getClass().getResource
-				  ("/views/Login.fxml"));
+				  ("/views/Dashboard.fxml"));
 				root.setCenter(pane);
 
 				System.out.println("Employee " + user.getString("firstName") + " " + user.getString("lastName") +

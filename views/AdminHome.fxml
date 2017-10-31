@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane minHeight="300.0" minWidth="500.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AdminHomeController">
+   <children>
+      <Button fx:id="btnAdd" layoutX="66.0" layoutY="128.0" minHeight="50.0" minWidth="150.0" mnemonicParsing="false" text="Add Employee" />
+      <Button fx:id="btnView" layoutX="288.0" layoutY="128.0" minHeight="50.0" minWidth="150.0" mnemonicParsing="false" text="View Employees" />
+   </children>
+</AnchorPane>

@@ -37,7 +37,7 @@ public class PasswordLoginController {
                 btnLogin.fire();
             }
         
-    });
+		});
 		
 		btnLogin.setOnAction(e -> {
 			// Retrieve user password from database
