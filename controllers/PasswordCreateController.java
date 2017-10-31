@@ -43,7 +43,7 @@ public class PasswordCreateController {
 		btnCreate.setOnAction(e -> {
 			String id = "";
 			try {
-				id = user.getString(6);
+				id = user.getString("employeeID");
 			} catch (SQLException ex) {
 				ex.printStackTrace();
 			}
@@ -73,7 +73,7 @@ public class PasswordCreateController {
 					  ("/views/Home.fxml"));
 					root.setCenter(pane);
 					
-					System.out.println("Employee " + user.getString(1) +
+					System.out.println("Employee " + user.getString("employeeID") +
 							" logged in on " + new Date());
 				} catch (Exception ex) {
 					ex.printStackTrace();

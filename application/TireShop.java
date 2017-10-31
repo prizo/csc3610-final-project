@@ -25,7 +25,7 @@ public class TireShop extends Application {
 		
 		root = new BorderPane();
 		
-		AnchorPane pane = FXMLLoader.load(getClass().getResource("/views/Login.fxml"));
+		AnchorPane pane = FXMLLoader.load(getClass().getResource("/views/Dashboard.fxml"));
 		root.setCenter(pane);
 		
 		Scene scene = new Scene(root);

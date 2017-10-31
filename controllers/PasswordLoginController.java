@@ -43,7 +43,7 @@ public class PasswordLoginController {
 			// Retrieve user password from database
 			String userPassword = null;
 			try {
-				userPassword = user.getString(4);
+				userPassword = user.getString("password");
 			} catch (SQLException ex) {
 				ex.printStackTrace();
 			}
@@ -58,13 +58,14 @@ public class PasswordLoginController {
 					  ("/views/Home.fxml"));
 					root.setCenter(pane);
 
-					System.out.println("employees " + user.getString(1) +
+					System.out.println("employee " + user.getString("firstName") + " " + user.getString("lastName") +
 							" logged in on " + new Date());
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}
 			}
 			else {
+				txtPassword.clear();
 				Alert alert = new Alert(AlertType.ERROR, "Password incorrect!");
 				alert.showAndWait();
 			}	

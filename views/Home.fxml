@@ -1,64 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Hyperlink?>
-<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane minHeight="300.0" minWidth="500.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.HomeController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="363.0" prefWidth="380.0" style="-fx-background-color: BLACK;" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.HomeController">
    <children>
-      <BorderPane minHeight="300.0" minWidth="500.0">
-         <center>
-            <VBox spacing="15.0" BorderPane.alignment="CENTER">
-               <children>
-                  <Hyperlink fx:id="linkSearch" text="Search">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Hyperlink>
-                  <Hyperlink fx:id="linkInvoice" text="Generate Invoice">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Hyperlink>
-                  <Hyperlink fx:id="linkAppointment" text="Make Appointment">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Hyperlink>
-                  <Hyperlink fx:id="linkLogout" text="Logout">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Hyperlink>
-               </children>
-               <BorderPane.margin>
-                  <Insets />
-               </BorderPane.margin>
-               <padding>
-                  <Insets left="15.0" />
-               </padding>
-            </VBox>
-         </center>
-         <top>
-            <VBox BorderPane.alignment="CENTER">
-               <children>
-                  <Text fx:id="txtInfo" strokeType="OUTSIDE" strokeWidth="0.0">
-                     <VBox.margin>
-                        <Insets bottom="10.0" left="20.0" right="10.0" top="10.0" />
-                     </VBox.margin>
-                  </Text>
-                  <Separator prefWidth="200.0">
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin></Separator>
-               </children>
-            </VBox>
-         </top>
-      </BorderPane>
+      <ImageView fitHeight="149.0" fitWidth="132.0" layoutX="225.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Tireshop.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="43.0" layoutY="239.0" />
+      <Text fill="#f5f3f3" layoutX="43.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Logged In As:" />
+      <Button fx:id="btnBack" layoutX="50.0" layoutY="297.0" mnemonicParsing="false" text="Back" />
+      <Text fx:id="txtInfo" layoutX="43.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="90.18310278654099" />
+      <Hyperlink fx:id="linkSearch" layoutX="40.0" layoutY="82.0" text="Search" />
+      <Hyperlink fx:id="linkInvoice" layoutX="40.0" layoutY="136.0" text="Generate Invoice" />
+      <Hyperlink fx:id="linkAppointment" layoutX="43.0" layoutY="195.0" text="Make Appointment" />
+      <Hyperlink fx:id="linkLogout" layoutX="43.0" layoutY="246.0" text="Log Out" />
    </children>
 </AnchorPane>

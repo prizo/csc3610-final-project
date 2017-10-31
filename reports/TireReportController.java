@@ -1,4 +1,4 @@
-package controllers;
+package reports;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -21,16 +21,14 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.util.Callback;
 import models.Tire;
-import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
 
-public class SearchController {
+public class TireReportController {
 
 	BorderPane root = TireShop.getRoot();
 	Connection con = TireShop.getConnection();
 
 	@FXML
-	private TextField filterField;
+	private TextField sumField;
 	@FXML
 	private TableView<Tire> tireTable;
 	@FXML
@@ -46,8 +44,7 @@ public class SearchController {
 	@FXML
 	private ObservableList<Tire> masterData = FXCollections.observableArrayList();
 	@FXML
-	private Button backButton;
-
+	private Button backButton, employeeButton, tireButton, customerButton, orderButton, invoiceButton;
 	@FXML
 	private void initialize() {
 
@@ -61,7 +58,6 @@ public class SearchController {
 						rs.getDouble("price"), rs.getString("brand"), rs.getInt("rimDiameter"));
 				masterData.add(test);
 			}
-			System.out.println(masterData.size());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -101,37 +97,63 @@ public class SearchController {
 			}
 		});
 
-		FilteredList<Tire> filteredData = new FilteredList<>(masterData, p -> true);
 
-		filterField.textProperty().addListener((observable, oldValue, newValue) -> {
-			filteredData.setPredicate(tire -> {
-				// If filter text is empty, display all Tires.
-				if (newValue == null || newValue.isEmpty()) {
-					return true;
-				}
-
-				// Compare first name and last name of every Tire with filter text.
-				String lowerCaseFilter = newValue.toLowerCase();
-
-				if (tire.getName().toLowerCase().contains(lowerCaseFilter)) {
-					return true; // Filter matches first name.
-				} else if (tire.getBrand().toLowerCase().contains(lowerCaseFilter)) {
-					return true; // Filter matches last name.
-				}
-				return false; // Does not match.
-			});
-		});
-
-		SortedList<Tire> sortedData = new SortedList<>(filteredData);
-
-		sortedData.comparatorProperty().bind(tireTable.comparatorProperty());
-
-		tireTable.setItems(sortedData);
+		sumField.setText(Integer.toString(masterData.size()));
 		
 		backButton.setOnAction(e -> {
 			try {
 				AnchorPane pane = FXMLLoader.load(getClass().getResource
-				  ("/views/Home.fxml"));
+				  ("/views/Dashboard.fxml"));
+				root.setCenter(pane);
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		});
+		
+		employeeButton.setOnAction(e -> {
+			try {
+				AnchorPane pane = FXMLLoader.load(getClass().getResource
+				  ("/reports/EmployeeReport.fxml"));
+				root.setCenter(pane);
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		});
+		
+		tireButton.setOnAction(e -> {
+			try {
+				AnchorPane pane = FXMLLoader.load(getClass().getResource
+				  ("/reports/TireReport.fxml"));
+				root.setCenter(pane);
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		});
+		
+		customerButton.setOnAction(e -> {
+			try {
+				AnchorPane pane = FXMLLoader.load(getClass().getResource
+				  ("/reports/CustomerReport.fxml"));
+				root.setCenter(pane);
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		});
+		
+		orderButton.setOnAction(e -> {
+			try {
+				AnchorPane pane = FXMLLoader.load(getClass().getResource
+				  ("/reports/OrderReport.fxml"));
+				root.setCenter(pane);
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		});
+		
+		invoiceButton.setOnAction(e -> {
+			try {
+				AnchorPane pane = FXMLLoader.load(getClass().getResource
+				  ("/reports/InvoiceReport.fxml"));
 				root.setCenter(pane);
 			} catch (IOException ex) {
 				ex.printStackTrace();
