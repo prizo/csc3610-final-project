@@ -42,7 +42,7 @@ BorderPane root = TireShop.getRoot();
 		adminButton.setOnAction(e -> {
 			try {
 				AnchorPane pane = FXMLLoader.load(getClass().getResource
-				  ("/views/AdminHome.fxml"));
+				  ("/views/AdminLogin.fxml"));
 				root.setCenter(pane);
 			} catch (IOException ex) {
 				ex.printStackTrace();

@@ -44,7 +44,7 @@ public class TireShop extends Application {
 			
 			// Establish a connection
 			connection = DriverManager.getConnection
-					  ("jdbc:mysql://localhost/tiregroup", "csc_student", "csc3610");
+					  ("jdbc:mysql://localhost/tiregroup", "root", "csc");
 			System.out.println("Database connected");
 		}
 		catch (Exception ex) {
