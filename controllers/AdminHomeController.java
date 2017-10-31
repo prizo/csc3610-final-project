@@ -1,7 +1,6 @@
 package controllers;
 
 import java.io.IOException;
-
 import application.TireShop;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,40 +8,33 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 
-public class DashboardController {
-
-BorderPane root = TireShop.getRoot();
+public class AdminHomeController {
+	
+	BorderPane root = TireShop.getRoot();
 	
 	@FXML
-	private Button logInButton, adminButton, reportsButton, documentButton;
+	private Button btnAdd;
+	
+	@FXML
+	private Button btnView;
 	
 	@FXML
 	private void initialize() {
 		
-		logInButton.setOnAction(e -> {
+		btnAdd.setOnAction(e -> {
 			try {
 				AnchorPane pane = FXMLLoader.load(getClass().getResource
-				  ("/views/Login.fxml"));
+				  ("/views/EmployeeAdd.fxml"));
 				root.setCenter(pane);
 			} catch (IOException ex) {
 				ex.printStackTrace();
 			}
 		});
 		
-		reportsButton.setOnAction(e -> {
+		btnView.setOnAction(e -> {
 			try {
 				AnchorPane pane = FXMLLoader.load(getClass().getResource
-				  ("/reports/EmployeeReport.fxml"));
-				root.setCenter(pane);
-			} catch (IOException ex) {
-				ex.printStackTrace();
-			}
-		});
-		
-		adminButton.setOnAction(e -> {
-			try {
-				AnchorPane pane = FXMLLoader.load(getClass().getResource
-				  ("/views/AdminHome.fxml"));
+				  ("/views/EmployeeView.fxml"));
 				root.setCenter(pane);
 			} catch (IOException ex) {
 				ex.printStackTrace();
@@ -52,4 +44,3 @@ BorderPane root = TireShop.getRoot();
 	}
 
 }
-
