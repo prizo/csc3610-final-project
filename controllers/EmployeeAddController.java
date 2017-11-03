@@ -11,7 +11,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.BorderPane;
 
 public class EmployeeAddController {
@@ -81,7 +81,7 @@ public class EmployeeAddController {
 		// Send user back to admin home page
 		btnBack.setOnAction(e -> {
 			try {
-				AnchorPane pane = FXMLLoader.load(getClass().getResource
+				StackPane pane = FXMLLoader.load(getClass().getResource
 				  ("/views/AdminHome.fxml"));
 				root.setCenter(pane);
 			} catch (IOException ex) {

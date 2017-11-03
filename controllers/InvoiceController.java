@@ -23,7 +23,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.BorderPane;
 import models.Customer;
 import models.Invoice;
@@ -123,7 +123,7 @@ public class InvoiceController {
 
 		backButton.setOnAction(e -> {
 			try {
-				AnchorPane pane = FXMLLoader.load(getClass().getResource("/views/Home.fxml"));
+				StackPane pane = FXMLLoader.load(getClass().getResource("/views/Home.fxml"));
 				root.setCenter(pane);
 			} catch (IOException ex) {
 				ex.printStackTrace();

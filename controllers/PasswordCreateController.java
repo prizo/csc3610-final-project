@@ -14,7 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.BorderPane;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
@@ -69,7 +69,7 @@ public class PasswordCreateController {
 				}
 				
 				try {
-					AnchorPane pane = FXMLLoader.load(getClass().getResource
+					StackPane pane = FXMLLoader.load(getClass().getResource
 					  ("/views/Home.fxml"));
 					root.setCenter(pane);
 					
