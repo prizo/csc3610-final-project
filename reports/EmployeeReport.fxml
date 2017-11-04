@@ -5,13 +5,14 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="673.0" prefWidth="805.0" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1" fx:controller="reports.EmployeeReportController">
+
+<StackPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="reports.EmployeeReportController">
    <children>
-      <Pane layoutX="6.0" prefHeight="691.0" prefWidth="799.0">
+      <Pane prefHeight="691.0" prefWidth="799.0">
          <children>
             <TableView fx:id="employeeTable" layoutX="53.0" layoutY="144.0" prefHeight="469.0" prefWidth="713.0">
               <columns>
@@ -38,4 +39,4 @@
          </children>
       </Pane>
    </children>
-</AnchorPane>
+</StackPane>

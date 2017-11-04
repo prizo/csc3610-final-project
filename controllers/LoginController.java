@@ -13,7 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.BorderPane;
 
 public class LoginController {
@@ -53,7 +53,7 @@ public class LoginController {
 				if (user.next()) {
 					if (user.getString("password") == null) {
 						try {
-							AnchorPane pane = FXMLLoader.load(getClass().getResource
+							StackPane pane = FXMLLoader.load(getClass().getResource
 							  ("/views/PasswordCreate.fxml"));
 							root.setCenter(pane);
 						} catch (IOException ex) {
@@ -62,7 +62,7 @@ public class LoginController {
 					}
 					else {
 						try {
-							AnchorPane pane = FXMLLoader.load(getClass().getResource
+							StackPane pane = FXMLLoader.load(getClass().getResource
 							  ("/views/PasswordLogin.fxml"));
 							root.setCenter(pane);
 						} catch (IOException ex) {

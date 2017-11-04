@@ -7,7 +7,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.BorderPane;
 
 public class TireShop extends Application {
@@ -24,8 +24,10 @@ public class TireShop extends Application {
 		//TireShop.primaryStage = primaryStage;
 		
 		root = new BorderPane();
+		root.setStyle("-fx-background-color: black;");
+		root.setMinSize(1024, 768);
 		
-		AnchorPane pane = FXMLLoader.load(getClass().getResource("/views/Dashboard.fxml"));
+		StackPane pane = FXMLLoader.load(getClass().getResource("/views/Dashboard.fxml"));
 		root.setCenter(pane);
 		
 		Scene scene = new Scene(root);
@@ -44,7 +46,7 @@ public class TireShop extends Application {
 			
 			// Establish a connection
 			connection = DriverManager.getConnection
-					  ("jdbc:mysql://localhost/tiregroup", "csc_student", "csc3610");
+					  ("jdbc:mysql://localhost/tiregroup", "root", "csc");
 			System.out.println("Database connected");
 		}
 		catch (Exception ex) {

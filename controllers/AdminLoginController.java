@@ -13,7 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.BorderPane;
 
 public class AdminLoginController {
@@ -56,7 +56,7 @@ public class AdminLoginController {
 				if (user.next()) {
 					if (user.getBoolean("isAdmin")) {
 						try {
-							AnchorPane pane = FXMLLoader.load(getClass().getResource
+							StackPane pane = FXMLLoader.load(getClass().getResource
 							  ("/views/AdminHome.fxml"));
 							root.setCenter(pane);
 						} catch (IOException ex) {
@@ -83,7 +83,7 @@ public class AdminLoginController {
 		
 		btnBack.setOnAction(e -> {
 			try {
-				AnchorPane pane = FXMLLoader.load(getClass().getResource
+				StackPane pane = FXMLLoader.load(getClass().getResource
 				  ("/views/Dashboard.fxml"));
 				root.setCenter(pane);
 			} catch (IOException ex) {
