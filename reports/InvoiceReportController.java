@@ -18,7 +18,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.BorderPane;
 import javafx.util.Callback;
 import models.Invoice;
@@ -105,7 +105,7 @@ public class InvoiceReportController {
 		
 		backButton.setOnAction(e -> {
 			try {
-				AnchorPane pane = FXMLLoader.load(getClass().getResource
+				StackPane pane = FXMLLoader.load(getClass().getResource
 				  ("/views/Dashboard.fxml"));
 				root.setCenter(pane);
 			} catch (IOException ex) {
@@ -115,7 +115,7 @@ public class InvoiceReportController {
 		
 		employeeButton.setOnAction(e -> {
 			try {
-				AnchorPane pane = FXMLLoader.load(getClass().getResource
+				StackPane pane = FXMLLoader.load(getClass().getResource
 				  ("/reports/EmployeeReport.fxml"));
 				root.setCenter(pane);
 			} catch (IOException ex) {
@@ -125,7 +125,7 @@ public class InvoiceReportController {
 		
 		tireButton.setOnAction(e -> {
 			try {
-				AnchorPane pane = FXMLLoader.load(getClass().getResource
+				StackPane pane = FXMLLoader.load(getClass().getResource
 				  ("/reports/TireReport.fxml"));
 				root.setCenter(pane);
 			} catch (IOException ex) {
@@ -135,7 +135,7 @@ public class InvoiceReportController {
 		
 		customerButton.setOnAction(e -> {
 			try {
-				AnchorPane pane = FXMLLoader.load(getClass().getResource
+				StackPane pane = FXMLLoader.load(getClass().getResource
 				  ("/reports/CustomerReport.fxml"));
 				root.setCenter(pane);
 			} catch (IOException ex) {
@@ -145,7 +145,7 @@ public class InvoiceReportController {
 		
 		orderButton.setOnAction(e -> {
 			try {
-				AnchorPane pane = FXMLLoader.load(getClass().getResource
+				StackPane pane = FXMLLoader.load(getClass().getResource
 				  ("/reports/OrderReport.fxml"));
 				root.setCenter(pane);
 			} catch (IOException ex) {
@@ -155,7 +155,7 @@ public class InvoiceReportController {
 		
 		invoiceButton.setOnAction(e -> {
 			try {
-				AnchorPane pane = FXMLLoader.load(getClass().getResource
+				StackPane pane = FXMLLoader.load(getClass().getResource
 				  ("/reports/InvoiceReport.fxml"));
 				root.setCenter(pane);
 			} catch (IOException ex) {

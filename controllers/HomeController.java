@@ -8,7 +8,7 @@ import application.TireShop;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Hyperlink;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 
@@ -43,7 +43,7 @@ public class HomeController {
 		
 		linkSearch.setOnAction(e -> {
 			try {
-				AnchorPane pane = FXMLLoader.load(getClass().getResource
+				StackPane pane = FXMLLoader.load(getClass().getResource
 				  ("/views/Search.fxml"));
 				root.setCenter(pane);
 			} catch (IOException ex) {
@@ -53,7 +53,7 @@ public class HomeController {
 		
 		linkInvoice.setOnAction(e -> {
 			try {
-				AnchorPane pane = FXMLLoader.load(getClass().getResource
+				StackPane pane = FXMLLoader.load(getClass().getResource
 				  ("/views/Invoice.fxml"));
 				root.setCenter(pane);
 			} catch (IOException ex) {
@@ -63,7 +63,7 @@ public class HomeController {
 		
 		linkAppointment.setOnAction(e -> {
 			try {
-				AnchorPane pane = FXMLLoader.load(getClass().getResource
+				StackPane pane = FXMLLoader.load(getClass().getResource
 				  ("/views/Appointment.fxml"));
 				root.setCenter(pane);
 			} catch (IOException ex) {
@@ -73,8 +73,8 @@ public class HomeController {
 		
 		linkLogout.setOnAction(e -> {
 			try {
-				AnchorPane pane = FXMLLoader.load(getClass().getResource
-				  ("/views/Login.fxml"));
+				StackPane pane = FXMLLoader.load(getClass().getResource
+				  ("/views/Dashboard.fxml"));
 				root.setCenter(pane);
 
 				System.out.println("Employee " + user.getString("firstName") + " " + user.getString("lastName") +

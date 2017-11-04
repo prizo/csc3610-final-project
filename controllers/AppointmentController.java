@@ -5,7 +5,7 @@ import application.TireShop;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.BorderPane;
 
 public class AppointmentController {
@@ -20,7 +20,7 @@ BorderPane root = TireShop.getRoot();
 		
 		btnBack.setOnAction(e -> {
 			try {
-				AnchorPane pane = FXMLLoader.load(getClass().getResource
+				StackPane pane = FXMLLoader.load(getClass().getResource
 				  ("/views/Home.fxml"));
 				root.setCenter(pane);
 			} catch (IOException ex) {
