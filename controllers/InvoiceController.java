@@ -145,13 +145,13 @@ public class InvoiceController {
 	private Customer CheckCustomer() {
 		
 		StringBuilder errorMessage = new StringBuilder();
-		Pattern numberCheck = Pattern.compile	("((?=.*\\d))");
+/*		Pattern numberCheck = Pattern.compile	("((?=.*\\d))");
 		Pattern emailCheck = Pattern.compile("[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}");
 		Matcher firstNameMatch = numberCheck.matcher(firstName.getText());
 		Matcher lastNameMatch = numberCheck.matcher(lastName.getText());
 		Matcher phoneNumberMatch = numberCheck.matcher(phoneNumber.getText());
 		Matcher emailMatch = emailCheck.matcher(em.getText());
-/*		
+		
 		if (firstNameMatch.matches() || firstName.getText().length() == 0) {
 			errorMessage.append("First name can't contain a number.\n");			
 		}
