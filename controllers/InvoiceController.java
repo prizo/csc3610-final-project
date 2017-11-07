@@ -38,18 +38,20 @@ public class InvoiceController {
 	@FXML
 	private ListView<String> tireView;
 	@FXML
-	private ComboBox<String> cmbTireBrand;
+	private ComboBox<String> cmbTireBrand, cmbCustomer;
 	@FXML
 	private ObservableList<String> tireNameList = FXCollections.observableArrayList();
 	@FXML
 	private ObservableList<String> tireBrandList = FXCollections.observableArrayList();
+	@FXML
+	private ObservableList<String> customerList = FXCollections.observableArrayList();
 	@FXML
 	private TextField tireBrand, tireName, rimDiameter, firstName, lastName, phoneNumber, tireQuantity, tirePrice,
 			laborCost, em, tireID;
 	@FXML
 	private TextArea txtinvoice;
 	@FXML
-	private Button backButton, saveButton, clearButton;
+	private Button backButton, saveButton, clearButton, customerButton;
 	@FXML
 	private RadioButton installTires;
 
@@ -58,6 +60,7 @@ public class InvoiceController {
 
 		// setTireNames();
 		setTireBrands();
+		setCustomers();
 
 		tireView.setOnMouseClicked(e -> {
 
@@ -102,10 +105,25 @@ public class InvoiceController {
 			}
 		});
 
-		/*
-		 * allTiresButton.setOnAction((event) ->{ try { setTireNames(); } catch
-		 * (ClassNotFoundException | SQLException e1) { e1.printStackTrace(); } });
-		 */
+		cmbCustomer.setOnAction((event) -> {
+			try {
+				Statement statement = con.createStatement();
+				String query = "select * from customers where email = '"
+						+ cmbCustomer.getSelectionModel().getSelectedItem() + "'";
+				ResultSet results = statement.executeQuery(query);
+				// Fills in the data fields with the queried items attributes
+				while (results.next()) {
+					firstName.setText(results.getString("firstName"));
+					lastName.setText(results.getString("lastName"));
+					phoneNumber.setText(results.getString("phoneNumber"));
+					em.setText(results.getString("email"));
+				}
+				tireView.setItems(tireNameList);
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		});
+		
 		saveButton.setOnAction((event) -> {
 
 			Customer invoiceCust = CheckCustomer();
@@ -129,8 +147,21 @@ public class InvoiceController {
 				ex.printStackTrace();
 			}
 		});
+		
+		customerButton.setOnAction(e -> {
+			try {
+				StackPane pane = FXMLLoader.load(getClass().getResource("/views/Customer.fxml"));
+				root.setCenter(pane);
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		});
+
+		
 	}
 
+	
+	
 
 
 	/*
@@ -145,27 +176,21 @@ public class InvoiceController {
 	private Customer CheckCustomer() {
 		
 		StringBuilder errorMessage = new StringBuilder();
-/*		Pattern numberCheck = Pattern.compile	("((?=.*\\d))");
-		Pattern emailCheck = Pattern.compile("[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}");
-		Matcher firstNameMatch = numberCheck.matcher(firstName.getText());
-		Matcher lastNameMatch = numberCheck.matcher(lastName.getText());
-		Matcher phoneNumberMatch = numberCheck.matcher(phoneNumber.getText());
-		Matcher emailMatch = emailCheck.matcher(em.getText());
+
 		
-		if (firstNameMatch.matches() || firstName.getText().length() == 0) {
-			errorMessage.append("First name can't contain a number.\n");			
+		if (firstName.getText().length() == 0) {
+			errorMessage.append("First name is empty.\n");			
 		}
 		
-		if (lastNameMatch.matches() || lastName.getText().length() == 0) {
-			errorMessage.append("Last name can't contain a number.\n");
+		if (lastName.getText().length() == 0) {
+			errorMessage.append("Last name is empty.\n");
 		}
-		if (!phoneNumberMatch.matches() || phoneNumber.getText().length() == 0) {
-			errorMessage.append("Phone number has to have numbers.\n");
+		if (phoneNumber.getText().length() == 0) {
+			errorMessage.append("Phone number is empty.\n");
 		}
-		if (!emailMatch.matches() || em.getText().length() == 0) {
-			errorMessage.append("Email is not in a valid format.\n");
-		}	
-*/		
+		if (em.getText().length() == 0) {
+			errorMessage.append("Email is empty.\n");
+		}			
 		if (errorMessage.length() != 0){
 			Alert alert = new Alert(AlertType.ERROR, errorMessage.toString() );
 			alert.showAndWait();
@@ -290,6 +315,17 @@ public class InvoiceController {
 		}
 		// Loads the tire brand list in to the tire brand
 		cmbTireBrand.setItems(tireBrandList);
+	}
+	
+	private void setCustomers() throws ClassNotFoundException, SQLException {
+		Statement statement = con.createStatement();
+		ResultSet rs = statement.executeQuery("Select email from customers");
+		customerList.removeAll(customerList);
+		while (rs.next()) {
+			customerList.add(rs.getString("email"));
+		}
+		// Loads the tire brand list in to the tire brand
+		cmbCustomer.setItems(customerList);
 	}
 
 	private void ClearFields() {

@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.InvoiceController">
+<StackPane style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.InvoiceController">
    <children>
       <Group>
          <children>
@@ -26,52 +26,47 @@
                   <Font size="19.0" />
                </font>
             </Label>
-            <Label layoutY="507.0" prefHeight="42.0" prefWidth="223.0" text="Customer Information:" textFill="#fffefe">
-               <font>
-                  <Font size="19.0" />
-               </font>
-            </Label>
-            <TextField fx:id="firstName" layoutX="4.0" layoutY="550.0" promptText="First Name">
+            <TextField fx:id="firstName" editable="false" layoutX="4.0" layoutY="550.0" promptText="First Name">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </TextField>
-            <TextField fx:id="lastName" layoutX="194.0" layoutY="550.0" promptText="Last Name">
+            <TextField fx:id="lastName" editable="false" layoutX="194.0" layoutY="550.0" promptText="Last Name">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </TextField>
-            <TextField fx:id="phoneNumber" layoutX="4.0" layoutY="600.0" promptText="Phone Number">
+            <TextField fx:id="phoneNumber" editable="false" layoutX="4.0" layoutY="600.0" promptText="Phone Number">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </TextField>
-            <TextField fx:id="em" layoutX="194.0" layoutY="600.0" promptText="Email">
+            <TextField fx:id="em" editable="false" layoutX="194.0" layoutY="600.0" promptText="Email">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </TextField>
-            <TextField fx:id="tireName" editable="false" layoutX="4.0" layoutY="301.0" prefHeight="27.0" prefWidth="167.0" promptText="Name">
+            <TextField fx:id="tireName" editable="false" layoutX="4.0" layoutY="301.0" prefHeight="29.0" prefWidth="171.0" promptText="Name">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </TextField>
             <TextArea fx:id="txtinvoice" editable="false" layoutX="392.0" layoutY="413.0" prefHeight="200.0" prefWidth="380.0" />
-            <TextField fx:id="rimDiameter" editable="false" layoutX="3.0" layoutY="239.0" prefHeight="27.0" prefWidth="150.0" promptText="Rim Diameter">
+            <TextField fx:id="rimDiameter" editable="false" layoutX="3.0" layoutY="239.0" prefHeight="30.0" prefWidth="170.0" promptText="Rim Diameter">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </TextField>
             <RadioButton fx:id="installTires" layoutX="194.0" layoutY="652.0" mnemonicParsing="false" text="Install Tires" textFill="#fcfafa" />
-            <TextField fx:id="tirePrice" editable="false" layoutX="7.0" layoutY="386.0" />
-            <TextField fx:id="laborCost" layoutX="8.0" layoutY="464.0" />
+            <TextField fx:id="tirePrice" editable="false" layoutX="7.0" layoutY="386.0" prefHeight="31.0" prefWidth="169.0" />
+            <TextField fx:id="laborCost" layoutX="8.0" layoutY="464.0" prefHeight="31.0" prefWidth="170.0" />
             <ComboBox fx:id="cmbTireBrand" layoutX="622.0" layoutY="126.0" prefWidth="150.0" promptText="Brands" />
             <Label layoutX="521.0" layoutY="389.0" prefHeight="17.0" prefWidth="150.0" text="Customer Invoice" textFill="#fffdfd" underline="true">
                <font>
                   <Font name="System Bold" size="17.0" />
                </font>
             </Label>
-            <TextField fx:id="tireBrand" editable="false" layoutX="3.0" layoutY="179.0" prefHeight="27.0" prefWidth="150.0" promptText="Brand">
+            <TextField fx:id="tireBrand" editable="false" layoutX="3.0" layoutY="179.0" prefHeight="30.0" prefWidth="172.0" promptText="Brand">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -79,9 +74,11 @@
             <Button fx:id="saveButton" layoutX="721.0" layoutY="647.0" mnemonicParsing="false" text="Save" />
             <Button fx:id="clearButton" layoutX="644.0" layoutY="647.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" text="Clear" />
             <ListView fx:id="tireView" layoutX="392.0" layoutY="179.0" prefHeight="200.0" prefWidth="380.0" />
-            <TextField fx:id="tireQuantity" layoutX="4.0" layoutY="126.0" prefHeight="27.0" prefWidth="150.0" promptText="Tire Quantity" />
+            <TextField fx:id="tireQuantity" layoutX="4.0" layoutY="126.0" prefHeight="31.0" prefWidth="173.0" promptText="Tire Quantity" />
             <Button fx:id="backButton" layoutY="647.0" mnemonicParsing="false" text="Back" />
             <TextField fx:id="tireID" editable="false" layoutX="7.0" layoutY="33.0" prefHeight="31.0" prefWidth="150.0" promptText="TireID" visible="false" />
+            <ComboBox fx:id="cmbCustomer" layoutX="3.0" layoutY="504.0" prefHeight="31.0" prefWidth="177.0" promptText="Customers" />
+            <Button fx:id="customerButton" layoutX="194.0" layoutY="504.0" mnemonicParsing="false" text="New Customer" />
          </children>
       </Group>
    </children>
