@@ -1,5 +1,6 @@
 package controllers;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -32,14 +33,19 @@ public class PasswordCreateController {
 	private Button btnCreate;
 	
 	@FXML
+	private Button btnBack;
+	
+	@FXML
 	private void initialize() {
+		
 		txtPassword.setOnKeyPressed(e ->{
 
             if (e.getCode() == (KeyCode.ENTER)) {
                 btnCreate.fire();
             }
         
-    });
+		});
+		
 		btnCreate.setOnAction(e -> {
 			String id = "";
 			try {
@@ -85,6 +91,16 @@ public class PasswordCreateController {
 				alert.showAndWait();
 			}
 			
+		});
+		
+		btnBack.setOnAction(e -> {
+			try {
+				StackPane pane = FXMLLoader.load(getClass().getResource
+				  ("/views/Login.fxml"));
+				root.setCenter(pane);
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
 		});
 		
 	}

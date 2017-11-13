@@ -1,5 +1,6 @@
 package controllers;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -27,6 +28,9 @@ public class AdminPasswordController {
 	
 	@FXML
 	private Button btnLogin;
+	
+	@FXML
+	private Button btnBack;
 	
 	@FXML
 	private void initialize() {
@@ -69,6 +73,16 @@ public class AdminPasswordController {
 				Alert alert = new Alert(AlertType.ERROR, "Password incorrect!");
 				alert.showAndWait();
 			}	
+		});
+		
+		btnBack.setOnAction(e -> {
+			try {
+				StackPane pane = FXMLLoader.load(getClass().getResource
+				  ("/views/AdminLogin.fxml"));
+				root.setCenter(pane);
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
 		});
 		
 	}

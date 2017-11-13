@@ -1,5 +1,6 @@
 package controllers;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -29,6 +30,9 @@ public class PasswordLoginController {
 	private Button btnLogin;
 	
 	@FXML
+	private Button btnBack;
+	
+	@FXML
 	private void initialize() {
 		
 		txtPassword.setOnKeyPressed(e ->{
@@ -37,7 +41,7 @@ public class PasswordLoginController {
                 btnLogin.fire();
             }
         
-    });
+		});
 		
 		btnLogin.setOnAction(e -> {
 			// Retrieve user password from database
@@ -58,7 +62,7 @@ public class PasswordLoginController {
 					  ("/views/Home.fxml"));
 					root.setCenter(pane);
 
-					System.out.println("employee " + user.getString("firstName") + " " + user.getString("lastName") +
+					System.out.println("Employee " + user.getString("firstName") + " " + user.getString("lastName") +
 							" logged in on " + new Date());
 				} catch (Exception ex) {
 					ex.printStackTrace();
@@ -69,6 +73,16 @@ public class PasswordLoginController {
 				Alert alert = new Alert(AlertType.ERROR, "Password incorrect!");
 				alert.showAndWait();
 			}	
+		});
+		
+		btnBack.setOnAction(e -> {
+			try {
+				StackPane pane = FXMLLoader.load(getClass().getResource
+				  ("/views/Login.fxml"));
+				root.setCenter(pane);
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
 		});
 		
 	}

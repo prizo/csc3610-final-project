@@ -7,7 +7,7 @@ import java.util.Date;
 import application.TireShop;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Hyperlink;
+import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
@@ -18,16 +18,16 @@ public class HomeController {
 	ResultSet user = LoginController.getUser();
 	
 	@FXML
-	private Hyperlink linkSearch;
+	private Button btnSearch;
 	
 	@FXML
-	private Hyperlink linkInvoice;
+	private Button btnInvoice;
 	
 	@FXML
-	private Hyperlink linkAppointment;
+	private Button btnAppointment;
 	
 	@FXML
-	private Hyperlink linkLogout;
+	private Button btnLogout;
 	
 	@FXML
 	private Text txtInfo;
@@ -36,12 +36,13 @@ public class HomeController {
 	private void initialize() {
 		
 		try {
-			txtInfo.setText("Logged in as " + user.getString("firstName") + " " + user.getString("lastName") + " on " + new Date());
+			txtInfo.setText("Logged in as " + user.getString("firstName") + " " 
+					+ user.getString("lastName") + " on " + new Date());
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
 		
-		linkSearch.setOnAction(e -> {
+		btnSearch.setOnAction(e -> {
 			try {
 				StackPane pane = FXMLLoader.load(getClass().getResource
 				  ("/views/Search.fxml"));
@@ -51,7 +52,7 @@ public class HomeController {
 			}
 		});
 		
-		linkInvoice.setOnAction(e -> {
+		btnInvoice.setOnAction(e -> {
 			try {
 				StackPane pane = FXMLLoader.load(getClass().getResource
 				  ("/views/Invoice.fxml"));
@@ -61,7 +62,7 @@ public class HomeController {
 			}
 		});
 		
-		linkAppointment.setOnAction(e -> {
+		btnAppointment.setOnAction(e -> {
 			try {
 				StackPane pane = FXMLLoader.load(getClass().getResource
 				  ("/views/Appointment.fxml"));
@@ -71,7 +72,7 @@ public class HomeController {
 			}
 		});
 		
-		linkLogout.setOnAction(e -> {
+		btnLogout.setOnAction(e -> {
 			try {
 				StackPane pane = FXMLLoader.load(getClass().getResource
 				  ("/views/Dashboard.fxml"));

@@ -1,30 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginController">
    <children>
-      <Group>
+      <Pane>
          <children>
-            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="276.0" fitWidth="309.0" layoutX="358.0" layoutY="196.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@Tireshop.png" />
                </image>
             </ImageView>
-            <TextField fx:id="txtID" layoutX="12.0" layoutY="181.0" promptText="Employee ID">
+            <TextField fx:id="txtID" layoutX="358.0" layoutY="483.0" />
+            <Button fx:id="btnEnter" layoutX="576.0" layoutY="483.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="91.0" text="Enter" />
+            <Button fx:id="btnBack" layoutX="358.0" layoutY="542.0" mnemonicParsing="false" text="Back" />
+            <Text fill="WHITE" layoutX="358.0" layoutY="449.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter an employee ID">
                <font>
-                  <Font name="System Bold" size="14.0" />
+                  <Font size="18.0" />
                </font>
-            </TextField>
-            <Button fx:id="btnEnter" layoutX="53.0" layoutY="245.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="91.0" text="Enter" />
+            </Text>
          </children>
-      </Group>
+      </Pane>
    </children>
 </StackPane>

@@ -49,6 +49,16 @@ BorderPane root = TireShop.getRoot();
 			}
 		});
 		
+		documentButton.setOnAction(e -> {
+			try {
+				StackPane pane = FXMLLoader.load(getClass().getResource
+				  ("/views/Documentation.fxml"));
+				root.setCenter(pane);
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		});
+		
 	}
 
 }

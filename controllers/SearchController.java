@@ -61,7 +61,7 @@ public class SearchController {
 						rs.getDouble("price"), rs.getString("brand"), rs.getInt("rimDiameter"));
 				masterData.add(test);
 			}
-			System.out.println(masterData.size());
+//			System.out.println(masterData.size());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
