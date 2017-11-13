@@ -1,5 +1,6 @@
 package controllers;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -30,6 +31,9 @@ public class AdminPasswordCreateController {
 	
 	@FXML
 	private Button btnCreate;
+	
+	@FXML
+	private Button btnBack;
 	
 	@FXML
 	private void initialize() {
@@ -85,6 +89,16 @@ public class AdminPasswordCreateController {
 				alert.showAndWait();
 			}
 			
+		});
+		
+		btnBack.setOnAction(e -> {
+			try {
+				StackPane pane = FXMLLoader.load(getClass().getResource
+				  ("/views/AdminLogin.fxml"));
+				root.setCenter(pane);
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
 		});
 		
 	}

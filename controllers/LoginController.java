@@ -31,6 +31,9 @@ public class LoginController {
 	private Button btnEnter;
 	
 	@FXML
+	private Button btnBack;
+	
+	@FXML
 	private void initialize() {
 		
 		txtID.setOnKeyPressed(e ->{
@@ -79,6 +82,16 @@ public class LoginController {
 			catch (SQLException ex) {
 				Alert alert = new Alert(AlertType.ERROR, "Invalid ID!");
 				alert.showAndWait();
+			}
+		});
+		
+		btnBack.setOnAction(e -> {
+			try {
+				StackPane pane = FXMLLoader.load(getClass().getResource
+				  ("/views/Dashboard.fxml"));
+				root.setCenter(pane);
+			} catch (IOException ex) {
+				ex.printStackTrace();
 			}
 		});
 		

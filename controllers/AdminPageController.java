@@ -78,7 +78,7 @@ public class AdminPageController {
 		Label firstNameHeader = new Label("First Name");
 		Label lastNameHeader = new Label("Last Name");
 		Label startDateHeader = new Label("Start Date");
-		Label isAdminHeader = new Label("Is Admin");
+		Label isAdminHeader = new Label("Admin");
 		
 		idHeader.setFont(new Font("Arial", 15));
 		firstNameHeader.setFont(new Font("Arial", 15));

@@ -5,6 +5,6 @@
 
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AdminPageController">
    <children>
-      <VBox fx:id="vbox" spacing="10.0" />
+      <VBox fx:id="vbox" spacing="20.0" />
    </children>
 </StackPane>
