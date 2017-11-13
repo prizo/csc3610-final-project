@@ -30,8 +30,7 @@ public class EmployeeReportController {
 
 	@FXML
 	private TextField sumField;
-	@FXML
-	private TableView<Employee> employeeTable;
+
 	@FXML
 	private TableColumn<Employee, Integer> employeeIDColumn;
 	@FXML
@@ -42,6 +41,8 @@ public class EmployeeReportController {
 	private TableColumn<Employee, Date> startDateColumn;
 	@FXML
 	private TableColumn<Employee, Boolean> isAdminColumn;
+	@FXML
+	private TableView<Employee> employeeTable;
 	@FXML
 	private ObservableList<Employee> masterData = FXCollections.observableArrayList();
 	@FXML

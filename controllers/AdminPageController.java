@@ -15,11 +15,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
@@ -27,6 +29,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -155,26 +158,30 @@ public class AdminPageController {
 		StackPane stackPane = new StackPane();
 		Scene scene = new Scene(stackPane);
 		
-		TextField firstName, lastName, startDate, isAdmin;
+		Label lblFName = new Label("First Name");
+		Label lblLName = new Label("Last Name");
+		Label lblDate = new Label("Start Date");
+		Label lblAdmin = new Label("Admin");
+		
+		TextField firstName, lastName, startDate;
+		ComboBox<String> isAdmin;
 		
 		firstName = new TextField();
 		firstName.setTooltip(new Tooltip("Enter First Name"));
-		firstName.setPromptText("First Name");
 		firstName.setMaxWidth(200);
 		
 		lastName = new TextField();
 		lastName.setTooltip(new Tooltip("Enter Last Name"));
-		lastName.setPromptText("Last Name");
 		lastName.setMaxWidth(200);
 		
 		startDate = new TextField();
 		startDate.setTooltip(new Tooltip("Enter Start Date"));
-		startDate.setPromptText("Start Date");
+		startDate.setPromptText("YYYY-MM-DD");
 		startDate.setMaxWidth(200);
 		
-		isAdmin = new TextField();
-		isAdmin.setTooltip(new Tooltip("Enter Admin Permission"));
-		isAdmin.setPromptText("Is Admin? (Yes or No)");
+		isAdmin = new ComboBox<>();
+		isAdmin.getItems().addAll("Yes", "No");
+		isAdmin.setTooltip(new Tooltip("Set Admin Permission"));
 		isAdmin.setMaxWidth(200);
 		
 		Button savebtn = new Button("Save");
@@ -186,12 +193,11 @@ public class AdminPageController {
 			String query = "insert into Employees (firstName, lastName, startDate, password, isAdmin) "
 					+ "values(?, ?, ?, ?, ?)";
 			
-			// If admin field is "Yes" or "yes" set variable to 1; else set to 0
-			byte admin;
-			if(isAdmin.getText().equals("Yes") || isAdmin.getText().equals("yes"))
-				admin = 1;
-			else
-				admin = 0;
+			// Set to non-admin by default
+			byte admin = 0;
+			// If admin field is "Yes" set variable to 1; else set to 0
+			if (isAdmin.getValue() != null)
+				admin = (byte) (isAdmin.getValue().equals("Yes") ? 1 : 0);
 			
 			// Execute prepared statement
 			try {
@@ -203,10 +209,10 @@ public class AdminPageController {
 				preparedStmt.setByte(5, admin);
 				preparedStmt.execute();
 				
-				Alert alert = new Alert(AlertType.INFORMATION, "Adding employee was successful!");
+				Alert alert = new Alert(AlertType.INFORMATION, "Employee create successful!");
 				alert.showAndWait();
 			} catch (SQLException e1) {
-				Alert alert = new Alert(AlertType.ERROR, "Adding employee failed!");
+				Alert alert = new Alert(AlertType.ERROR, "Employee create failed!");
 				alert.showAndWait();
 			}
 			
@@ -222,10 +228,18 @@ public class AdminPageController {
 			
 		});
 		
-		VBox vbox = new VBox(10);
-		vbox.getChildren().addAll(firstName, lastName, startDate, isAdmin, savebtn);
-		vbox.setPadding(new Insets(10));
-		stackPane.getChildren().add(vbox);
+		VBox labels = new VBox(20);
+		labels.getChildren().addAll(lblFName, lblLName, lblDate, lblAdmin);
+		labels.setAlignment(Pos.BASELINE_RIGHT);
+		labels.setPadding(new Insets(10));
+		
+		VBox fields = new VBox(10);
+		fields.getChildren().addAll(firstName, lastName, startDate, isAdmin, savebtn);
+		fields.setPadding(new Insets(10));
+		
+		HBox hbox = new HBox();
+		hbox.getChildren().addAll(labels, fields);
+		stackPane.getChildren().add(hbox);
 		
 		createStage.setTitle("New Employee");
 		createStage.setScene(scene);
@@ -277,27 +291,32 @@ public class AdminPageController {
 		StackPane stackPane = new StackPane();
 		Scene scene = new Scene(stackPane);
 		
-		TextField firstName, lastName, startDate, isAdmin;
+		Label lblFName = new Label("First Name");
+		Label lblLName = new Label("Last Name");
+		Label lblDate = new Label("Start Date");
+		Label lblAdmin = new Label("Admin");
+		
+		TextField firstName, lastName, startDate;
+		ComboBox<String> isAdmin;
 		
 		firstName = new TextField(employee.getFirstName());
 		firstName.setTooltip(new Tooltip("Enter First Name"));
-		firstName.setPromptText("First Name");
 		firstName.setMaxWidth(200);
 		
 		lastName = new TextField(employee.getLastName());
 		lastName.setTooltip(new Tooltip("Enter Last Name"));
-		lastName.setPromptText("Last Name");
 		lastName.setMaxWidth(200);
 		
 		startDate = new TextField(employee.getStartDate().toString());
 		startDate.setTooltip(new Tooltip("Enter Start Date"));
-		startDate.setPromptText("Start Date");
+		startDate.setPromptText("YYYY-MM-DD");
 		startDate.setMaxWidth(200);
 		
 		String admin = employee.isAdmin() ? "Yes": "No";
-		isAdmin = new TextField(admin);
-		isAdmin.setTooltip(new Tooltip("Enter Admin Permission"));
-		isAdmin.setPromptText("Is Admin? (Yes or No)");
+		isAdmin = new ComboBox<>();
+		isAdmin.getItems().addAll("Yes", "No");
+		isAdmin.setTooltip(new Tooltip("Set Admin Permission"));
+		isAdmin.setValue(admin);
 		isAdmin.setMaxWidth(200);
 		
 		Button savebtn = new Button("Save");
@@ -310,12 +329,8 @@ public class AdminPageController {
 					+ "set firstName = ?, lastName = ?, startDate = ?, isAdmin = ? "
 					+ "where employeeID = " + id;
 			
-			// If admin field is "Yes" or "yes" set variable to 1; else set to 0
-			byte updateAdmin;
-			if(isAdmin.getText().equals("Yes") || isAdmin.getText().equals("yes"))
-				updateAdmin = 1;
-			else
-				updateAdmin = 0;
+			// If admin field is "Yes" set variable to 1; else set to 0
+			byte updateAdmin = (byte) (isAdmin.getValue().equals("Yes") ? 1 : 0);
 			
 			// Execute prepared statement
 			try {
@@ -326,10 +341,10 @@ public class AdminPageController {
 				preparedStmt.setByte(4, updateAdmin);
 				preparedStmt.execute();
 				
-				Alert alert = new Alert(AlertType.INFORMATION, "Updating employee was successful!");
+				Alert alert = new Alert(AlertType.INFORMATION, "Employee update successful!");
 				alert.showAndWait();
 			} catch (SQLException e1) {
-				Alert alert = new Alert(AlertType.ERROR, "Updating employee failed!");
+				Alert alert = new Alert(AlertType.ERROR, "Employee update failed!");
 				alert.showAndWait();
 			}
 			
@@ -358,10 +373,10 @@ public class AdminPageController {
 				Statement statement = connection.createStatement();
 				statement.execute(updateQuery);
 				
-				Alert alert = new Alert(AlertType.INFORMATION, "Resetting password was successful!");
+				Alert alert = new Alert(AlertType.INFORMATION, "Password reset successful!");
 				alert.showAndWait();
 			} catch (SQLException e1) {
-				Alert alert = new Alert(AlertType.ERROR, "Resetting password failed!");
+				Alert alert = new Alert(AlertType.ERROR, "Password reset failed!");
 				alert.showAndWait();
 			}
 			
@@ -376,10 +391,18 @@ public class AdminPageController {
 			((Node)(e.getSource())).getScene().getWindow().hide();
 		});
 		
-		VBox vbox = new VBox(10);
-		vbox.getChildren().addAll(firstName, lastName, startDate, isAdmin, savebtn, resetbtn);
-		vbox.setPadding(new Insets(10));
-		stackPane.getChildren().add(vbox);
+		VBox labels = new VBox(20);
+		labels.getChildren().addAll(lblFName, lblLName, lblDate, lblAdmin);
+		labels.setAlignment(Pos.BASELINE_RIGHT);
+		labels.setPadding(new Insets(10));
+		
+		VBox fields = new VBox(10);
+		fields.getChildren().addAll(firstName, lastName, startDate, isAdmin, savebtn, resetbtn);
+		fields.setPadding(new Insets(10));
+		
+		HBox hbox = new HBox();
+		hbox.getChildren().addAll(labels, fields);
+		stackPane.getChildren().add(hbox);
 		
 		updateStage.setTitle("Edit Employee");
 		updateStage.setScene(scene);
@@ -422,10 +445,10 @@ public class AdminPageController {
 					Statement statement = connection.createStatement();
 					statement.execute(deleteQuery);
 					
-					Alert alert1 = new Alert(AlertType.INFORMATION, "Deleting employee was successful!");
+					Alert alert1 = new Alert(AlertType.INFORMATION, "Employee delete successful!");
 					alert1.showAndWait();
 				} catch (SQLException e1) {
-					Alert alert1 = new Alert(AlertType.ERROR, "Deleting employee failed!");
+					Alert alert1 = new Alert(AlertType.ERROR, "Employee delete failed!");
 					alert1.showAndWait();
 				}
 				

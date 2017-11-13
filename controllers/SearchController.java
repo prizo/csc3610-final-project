@@ -28,6 +28,7 @@ public class SearchController {
 
 	BorderPane root = TireShop.getRoot();
 	Connection con = TireShop.getConnection();
+	static Tire searchTire = new Tire();
 
 	@FXML
 	private TextField filterField;
@@ -46,7 +47,7 @@ public class SearchController {
 	@FXML
 	private ObservableList<Tire> masterData = FXCollections.observableArrayList();
 	@FXML
-	private Button backButton;
+	private Button backButton, addButton;
 
 	@FXML
 	private void initialize() {
@@ -110,13 +111,13 @@ public class SearchController {
 					return true;
 				}
 
-				// Compare first name and last name of every Tire with filter text.
+				// Compare tire name and tire brand of every Tire with filter text.
 				String lowerCaseFilter = newValue.toLowerCase();
 
 				if (tire.getName().toLowerCase().contains(lowerCaseFilter)) {
-					return true; // Filter matches first name.
+					return true; // Filter matches tire name
 				} else if (tire.getBrand().toLowerCase().contains(lowerCaseFilter)) {
-					return true; // Filter matches last name.
+					return true; // Filter matches brand
 				}
 				return false; // Does not match.
 			});
@@ -137,5 +138,23 @@ public class SearchController {
 				ex.printStackTrace();
 			}
 		});
+		
+		addButton.setOnAction(e -> {
+			
+			 searchTire = new Tire(tireTable.getSelectionModel().getSelectedItem());
+			
+			try {
+				StackPane pane = FXMLLoader.load(getClass().getResource
+				  ("/views/Invoice.fxml"));
+				root.setCenter(pane);
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		});	
+		
+	}
+	
+	public static Tire getTire() {
+		return searchTire;
 	}
 }
