@@ -7,6 +7,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.StackPane?>
@@ -46,13 +47,13 @@
                   <Font name="System Bold" size="13.0" />
                </font>
             </TextField>
-            <TextField fx:id="tireName" editable="false" layoutX="4.0" layoutY="301.0" prefHeight="29.0" prefWidth="171.0" promptText="Name">
+            <TextField fx:id="tireName" editable="false" layoutX="4.0" layoutY="317.0" prefHeight="29.0" prefWidth="171.0" promptText="Name">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </TextField>
             <TextArea fx:id="txtinvoice" editable="false" layoutX="392.0" layoutY="413.0" prefHeight="200.0" prefWidth="380.0" />
-            <TextField fx:id="rimDiameter" editable="false" layoutX="3.0" layoutY="239.0" prefHeight="30.0" prefWidth="170.0" promptText="Rim Diameter">
+            <TextField fx:id="rimDiameter" editable="false" layoutX="3.0" layoutY="263.0" prefHeight="30.0" prefWidth="170.0" promptText="Rim Diameter">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -66,7 +67,7 @@
                   <Font name="System Bold" size="17.0" />
                </font>
             </Label>
-            <TextField fx:id="tireBrand" editable="false" layoutX="3.0" layoutY="179.0" prefHeight="30.0" prefWidth="172.0" promptText="Brand">
+            <TextField fx:id="tireBrand" editable="false" layoutX="3.0" layoutY="213.0" prefHeight="30.0" prefWidth="172.0" promptText="Brand">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -74,11 +75,16 @@
             <Button fx:id="saveButton" layoutX="721.0" layoutY="647.0" mnemonicParsing="false" text="Save" />
             <Button fx:id="clearButton" layoutX="644.0" layoutY="647.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" text="Clear" />
             <ListView fx:id="tireView" layoutX="392.0" layoutY="179.0" prefHeight="200.0" prefWidth="380.0" />
-            <TextField fx:id="tireQuantity" layoutX="4.0" layoutY="126.0" prefHeight="31.0" prefWidth="173.0" promptText="Tire Quantity" />
             <Button fx:id="backButton" layoutY="647.0" mnemonicParsing="false" text="Back" />
             <TextField fx:id="tireID" editable="false" layoutX="7.0" layoutY="33.0" prefHeight="31.0" prefWidth="150.0" promptText="TireID" visible="false" />
             <ComboBox fx:id="cmbCustomer" layoutX="3.0" layoutY="504.0" prefHeight="31.0" prefWidth="177.0" promptText="Customers" />
             <Button fx:id="customerButton" layoutX="194.0" layoutY="504.0" mnemonicParsing="false" text="New Customer" />
+            <Spinner fx:id="tireQuantity" layoutY="161.0" prefHeight="31.0" prefWidth="174.0" />
+            <Label layoutY="126.0" prefHeight="29.0" prefWidth="122.0" text="Tire Quantity:" textFill="#fcf7f7">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
          </children>
       </Group>
    </children>

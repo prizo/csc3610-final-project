@@ -7,6 +7,10 @@ public class Tire {
 	private String brand;
 	private int rimDiameter;
 	
+	public Tire() {
+		
+	}
+	
 	public Tire(int tireID, String name, double price, String brand, int rimDiameter) {
 		this.tireID = tireID;
 		this.name = name;
@@ -14,6 +18,18 @@ public class Tire {
 		this.brand = brand;
 		this.rimDiameter = rimDiameter;
 	}
+
+	
+
+	public Tire(Tire another) {
+		this.tireID = another.getTireID();
+		this.name = another.getName();
+		this.price = another.getPrice();
+		this.brand = another.getBrand();
+		this.rimDiameter = another.getRimDiameter();
+	}
+
+
 
 	public int getTireID() {
 		return tireID;
