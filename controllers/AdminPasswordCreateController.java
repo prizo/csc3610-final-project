@@ -5,6 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.apache.commons.codec.digest.DigestUtils;
 import application.TireShop;
 import javafx.fxml.FXML;
@@ -14,16 +16,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.BorderPane;
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
+import javafx.scene.layout.StackPane;
 
-public class PasswordCreateController {
+public class AdminPasswordCreateController {
 	
 	BorderPane root = TireShop.getRoot();
 	Connection connection = TireShop.getConnection();
-	ResultSet user = LoginController.getUser();
+	ResultSet user = AdminLoginController.getUser();
 	
 	@FXML
 	private PasswordField txtPassword;
@@ -39,7 +39,7 @@ public class PasswordCreateController {
                 btnCreate.fire();
             }
         
-    });
+		});
 		btnCreate.setOnAction(e -> {
 			String id = "";
 			try {
@@ -70,10 +70,10 @@ public class PasswordCreateController {
 				
 				try {
 					StackPane pane = FXMLLoader.load(getClass().getResource
-					  ("/views/Home.fxml"));
+					  ("/views/AdminPage.fxml"));
 					root.setCenter(pane);
 					
-					System.out.println("Employee " + user.getString("firstName") + " " + user.getString("lastName") +
+					System.out.println("Admin " + user.getString("firstName") + " " + user.getString("lastName") +
 							" logged in on " + new Date());
 				} catch (Exception ex) {
 					ex.printStackTrace();

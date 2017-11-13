@@ -9,8 +9,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-
-<StackPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="reports.CustomerReportController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="reports.CustomerReportController">
    <children>
       <Pane prefHeight="691.0" prefWidth="799.0">
          <children>
@@ -29,13 +28,13 @@
             <Button fx:id="orderButton" layoutX="521.0" layoutY="23.0" mnemonicParsing="false" text="Orders" />
             <Button fx:id="invoiceButton" layoutX="616.0" layoutY="23.0" mnemonicParsing="false" text="Invoices" />
             <Button fx:id="backButton" layoutX="715.0" layoutY="634.0" mnemonicParsing="false" text="Back" />
-            <Label layoutX="53.0" layoutY="23.0" text="Reports:">
+            <Label layoutX="53.0" layoutY="23.0" text="Reports:" textFill="WHITE">
                <font>
                   <Font size="23.0" />
                </font>
             </Label>
             <TextField fx:id="sumField" editable="false" layoutX="160.0" layoutY="97.0" />
-            <Label layoutX="53.0" layoutY="102.0" text="Total Records:" />
+            <Label layoutX="53.0" layoutY="102.0" text="Total Records:" textFill="WHITE" />
          </children>
       </Pane>
    </children>

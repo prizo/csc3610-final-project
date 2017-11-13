@@ -55,12 +55,23 @@ public class AdminLoginController {
 				
 				if (user.next()) {
 					if (user.getBoolean("isAdmin")) {
-						try {
-							StackPane pane = FXMLLoader.load(getClass().getResource
-							  ("/views/AdminHome.fxml"));
-							root.setCenter(pane);
-						} catch (IOException ex) {
-							ex.printStackTrace();
+						if (user.getString("password") == null) {
+							try {
+								StackPane pane = FXMLLoader.load(getClass().getResource
+								  ("/views/AdminPasswordCreate.fxml"));
+								root.setCenter(pane);
+							} catch (IOException ex) {
+								ex.printStackTrace();
+							}
+						}
+						else {
+							try {
+								StackPane pane = FXMLLoader.load(getClass().getResource
+								  ("/views/AdminPassword.fxml"));
+								root.setCenter(pane);
+							} catch (IOException ex) {
+								ex.printStackTrace();
+							}
 						}
 					}
 					else {

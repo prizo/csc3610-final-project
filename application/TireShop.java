@@ -12,7 +12,7 @@ import javafx.scene.layout.BorderPane;
 
 public class TireShop extends Application {
 	
-	//private static Stage primaryStage;
+	private static Stage primaryStage;
 	private static BorderPane root;
 	private static Connection connection;
 	
@@ -21,7 +21,7 @@ public class TireShop extends Application {
 		
 		initializeDB();
 
-		//TireShop.primaryStage = primaryStage;
+		TireShop.primaryStage = primaryStage;
 		
 		root = new BorderPane();
 		root.setStyle("-fx-background-color: black;");
@@ -55,9 +55,9 @@ public class TireShop extends Application {
 		
 	}
 
-	//public static Stage getPrimaryStage() {
-		//return TireShop.primaryStage;
-	//}
+	public static Stage getPrimaryStage() {
+		return TireShop.primaryStage;
+	}
 	
 	public static BorderPane getRoot() {
 		return TireShop.root;
