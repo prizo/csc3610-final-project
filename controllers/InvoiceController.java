@@ -1,6 +1,7 @@
 package controllers;
 
 import java.io.IOException;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -67,11 +68,10 @@ public class InvoiceController {
 		IntegerSpinnerValueFactory quantityValues = new IntegerSpinnerValueFactory(0, 16, 0);
 		tireQuantity.setValueFactory(quantityValues);
 		//setTireNames();
-		laborCost.setText("$0");
+		laborCost.setText("0");
 		setSearchTire();
 		setTireBrands();
 		setCustomers();
-		System.out.println(searchTire.getName());
 		tireView.setOnMouseClicked(e -> {
 
 			try {
@@ -169,16 +169,16 @@ public class InvoiceController {
 		
 		installTires.setOnAction(e -> {
 			if (installTires.isSelected()) {
-				laborCost.setText("$"+ (10 * (tireQuantity.getValue())));
+				laborCost.setText(""+ (10 * (tireQuantity.getValue())));
 			}	
-			else laborCost.setText("$0");
+			else laborCost.setText("0");
 		});
 
 		tireQuantity.valueProperty().addListener((observable, oldValue, newValue) -> {
 			if (installTires.isSelected()) {
-				laborCost.setText("$"+ (10 * tireQuantity.getValue()));
+				laborCost.setText(""+ (10 * tireQuantity.getValue()));
 			}	
-			else laborCost.setText("$0");
+			else laborCost.setText("0");
 		});
 	}
 
@@ -225,25 +225,23 @@ public class InvoiceController {
 
 		else {
 			try {
-				String query = " insert into customers (firstName, lastName, phoneNumber, email)"
-						+ " values (?, ?, ?, ?)";
+				String query = "{call proc_InsertCustomer(?, ?, ?, ?, ?)}";
 
-				PreparedStatement preparedStmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-				preparedStmt.setString(1, firstName.getText());
-				preparedStmt.setString(2, lastName.getText());
-				preparedStmt.setString(3, phoneNumber.getText());
-				preparedStmt.setString(4, em.getText());
+				CallableStatement cStmt = con.prepareCall(query);
+				cStmt.setString(1, firstName.getText());
+				cStmt.setString(2, lastName.getText());
+				cStmt.setString(3, phoneNumber.getText());
+				cStmt.setString(4, em.getText());
+				cStmt.registerOutParameter(5, java.sql.Types.INTEGER);
+				cStmt.execute();
+				int customerID = cStmt.getInt(5);
+				System.out.println(customerID);
 
-				preparedStmt.execute();
-				ResultSet rs = preparedStmt.getGeneratedKeys();
-				if (rs.next()) {
-					int customerID = rs.getInt(1);
 					Customer cust = new Customer(customerID, firstName.getText(), lastName.getText(),
 							phoneNumber.getText(), em.getText());
-					rs.close();
-					preparedStmt.close();
+
 					return cust;
-				}
+				
 
 			} catch (SQLException ex) {
 				ex.printStackTrace();
@@ -357,7 +355,7 @@ public class InvoiceController {
 		rimDiameter.clear();
 		tireQuantity.getValueFactory().setValue(0);
 		tirePrice.clear();
-		laborCost.setText("$0");
+		laborCost.setText("0");
 		firstName.clear();
 		lastName.clear();
 		phoneNumber.clear();
