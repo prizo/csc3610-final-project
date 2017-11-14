@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,6 +23,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
@@ -163,7 +165,8 @@ public class AdminPageController {
 		Label lblDate = new Label("Start Date");
 		Label lblAdmin = new Label("Admin");
 		
-		TextField firstName, lastName, startDate;
+		TextField firstName, lastName;
+		DatePicker startDate;
 		ComboBox<String> isAdmin;
 		
 		firstName = new TextField();
@@ -174,9 +177,8 @@ public class AdminPageController {
 		lastName.setTooltip(new Tooltip("Enter Last Name"));
 		lastName.setMaxWidth(200);
 		
-		startDate = new TextField();
+		startDate = new DatePicker();
 		startDate.setTooltip(new Tooltip("Enter Start Date"));
-		startDate.setPromptText("YYYY-MM-DD");
 		startDate.setMaxWidth(200);
 		
 		isAdmin = new ComboBox<>();
@@ -193,18 +195,23 @@ public class AdminPageController {
 			String query = "insert into Employees (firstName, lastName, startDate, password, isAdmin) "
 					+ "values(?, ?, ?, ?, ?)";
 			
+			// Convert DatePicker date to SQL date
+			java.util.Date date = java.util.Date.from
+					(startDate.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
+			java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+			
 			// Set to non-admin by default
 			byte admin = 0;
 			// If admin field is "Yes" set variable to 1; else set to 0
 			if (isAdmin.getValue() != null)
 				admin = (byte) (isAdmin.getValue().equals("Yes") ? 1 : 0);
-			
+		
 			// Execute prepared statement
 			try {
 				PreparedStatement preparedStmt = connection.prepareStatement(query);
 				preparedStmt.setString(1, firstName.getText());
 				preparedStmt.setString(2, lastName.getText());
-				preparedStmt.setString(3, startDate.getText());
+				preparedStmt.setDate(3, sqlDate);
 				preparedStmt.setString(4, null);
 				preparedStmt.setByte(5, admin);
 				preparedStmt.execute();
@@ -296,7 +303,8 @@ public class AdminPageController {
 		Label lblDate = new Label("Start Date");
 		Label lblAdmin = new Label("Admin");
 		
-		TextField firstName, lastName, startDate;
+		TextField firstName, lastName;
+		DatePicker startDate;
 		ComboBox<String> isAdmin;
 		
 		firstName = new TextField(employee.getFirstName());
@@ -307,9 +315,8 @@ public class AdminPageController {
 		lastName.setTooltip(new Tooltip("Enter Last Name"));
 		lastName.setMaxWidth(200);
 		
-		startDate = new TextField(employee.getStartDate().toString());
+		startDate = new DatePicker(employee.getStartDate().toLocalDate());
 		startDate.setTooltip(new Tooltip("Enter Start Date"));
-		startDate.setPromptText("YYYY-MM-DD");
 		startDate.setMaxWidth(200);
 		
 		String admin = employee.isAdmin() ? "Yes": "No";
@@ -329,6 +336,11 @@ public class AdminPageController {
 					+ "set firstName = ?, lastName = ?, startDate = ?, isAdmin = ? "
 					+ "where employeeID = " + id;
 			
+			// Convert DatePicker date to SQL date
+			java.util.Date date = java.util.Date.from
+					(startDate.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
+			java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+			
 			// If admin field is "Yes" set variable to 1; else set to 0
 			byte updateAdmin = (byte) (isAdmin.getValue().equals("Yes") ? 1 : 0);
 			
@@ -337,7 +349,7 @@ public class AdminPageController {
 				PreparedStatement preparedStmt = connection.prepareStatement(updateQuery);
 				preparedStmt.setString(1, firstName.getText());
 				preparedStmt.setString(2, lastName.getText());
-				preparedStmt.setString(3, startDate.getText());
+				preparedStmt.setDate(3, sqlDate);
 				preparedStmt.setByte(4, updateAdmin);
 				preparedStmt.execute();
 				
