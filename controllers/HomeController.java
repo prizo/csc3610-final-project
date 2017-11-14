@@ -8,6 +8,7 @@ import application.TireShop;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
@@ -41,7 +42,24 @@ public class HomeController {
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
-		
+/*		
+		root.setOnKeyPressed(e ->{
+			
+			if(e.getCode() == KeyCode.DIGIT1) {
+				btnSearch.fire();
+			}
+			else if(e.getCode() == KeyCode.DIGIT2) {
+				btnInvoice.fire();
+			}
+			else if(e.getCode() == KeyCode.DIGIT3) {
+				btnAppointment.fire();
+			}
+			else if(e.getCode() == KeyCode.DIGIT4) {
+				btnLogout.fire();
+			}
+			
+		});
+*/
 		btnSearch.setOnAction(e -> {
 			try {
 				StackPane pane = FXMLLoader.load(getClass().getResource
