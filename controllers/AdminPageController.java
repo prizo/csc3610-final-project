@@ -1,5 +1,6 @@
 package controllers;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -191,10 +192,6 @@ public class AdminPageController {
 		
 		savebtn.setOnAction(e -> {
 			
-			// Prepare query
-			String query = "insert into Employees (firstName, lastName, startDate, password, isAdmin) "
-					+ "values(?, ?, ?, ?, ?)";
-			
 			// Convert DatePicker date to SQL date
 			java.util.Date date = java.util.Date.from
 					(startDate.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
@@ -207,6 +204,21 @@ public class AdminPageController {
 				admin = (byte) (isAdmin.getValue().equals("Yes") ? 1 : 0);
 		
 			// Execute prepared statement
+			String query = "{call proc_InsertEmployee(?, ?, ?, ?, ?)}";
+			try {
+				CallableStatement cStmt = connection.prepareCall(query);
+				cStmt.setString(1, firstName.getText());
+				cStmt.setString(2, lastName.getText());
+				cStmt.setDate(3, sqlDate);
+				cStmt.setByte(4, admin);
+				cStmt.registerOutParameter(5, java.sql.Types.TINYINT);
+				cStmt.execute();	
+				int made = cStmt.getInt(5);
+			
+/*
+			// Prepare query
+			String query = "insert into Employees (firstName, lastName, startDate, password, isAdmin) "
+					+ "values(?, ?, ?, ?, ?)";
 			try {
 				PreparedStatement preparedStmt = connection.prepareStatement(query);
 				preparedStmt.setString(1, firstName.getText());
@@ -215,11 +227,18 @@ public class AdminPageController {
 				preparedStmt.setString(4, null);
 				preparedStmt.setByte(5, admin);
 				preparedStmt.execute();
-				
-				Alert alert = new Alert(AlertType.INFORMATION, "Employee create successful!");
-				alert.showAndWait();
+*/			
+				if (made == 1) {
+					Alert alert = new Alert(AlertType.INFORMATION, "Employee create successful!");
+					alert.showAndWait();
+				}
+				else {
+					Alert alert = new Alert(AlertType.WARNING, "Employee already exists!");
+					alert.showAndWait();
+				}
 			} catch (SQLException e1) {
 				Alert alert = new Alert(AlertType.ERROR, "Employee create failed!");
+				e1.printStackTrace();
 				alert.showAndWait();
 			}
 			
