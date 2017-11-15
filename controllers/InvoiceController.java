@@ -51,8 +51,7 @@ public class InvoiceController {
 	@FXML
 	private ObservableList<String> customerList = FXCollections.observableArrayList();
 	@FXML
-	private TextField tireBrand, tireName, rimDiameter, firstName, lastName, phoneNumber, tirePrice,
-			laborCost, em, tireID;
+	private TextField tireBrand, tireName, rimDiameter, firstName, lastName, phoneNumber, tirePrice, laborCost, em;
 	@FXML
 	private Spinner<Integer> tireQuantity;
 	@FXML
@@ -65,9 +64,9 @@ public class InvoiceController {
 	@FXML
 	private void initialize() throws ClassNotFoundException, SQLException {
 
-		IntegerSpinnerValueFactory quantityValues = new IntegerSpinnerValueFactory(0, 16, 0);
+		IntegerSpinnerValueFactory quantityValues = new IntegerSpinnerValueFactory(1, 16, 1);
 		tireQuantity.setValueFactory(quantityValues);
-		//setTireNames();
+		// setTireNames();
 		laborCost.setText("0");
 		setSearchTire();
 		setTireBrands();
@@ -83,12 +82,20 @@ public class InvoiceController {
 				ResultSet results = statement.executeQuery(query);
 				// Fills in the data fields with the queried items attributes
 				while (results.next()) {
-					tireName.setText(results.getString("name"));
-					tireBrand.setText(results.getString("brand"));
-					rimDiameter.setText(results.getString("rimdiameter"));
-					tirePrice.setText("$" + results.getString("price"));
-					tireID.setText(results.getString("tireID"));
+					searchTire.setName(results.getString("name"));
+					searchTire.setBrand(results.getString("brand"));
+					searchTire.setRimDiameter(results.getInt("rimdiameter"));
+					searchTire.setPrice(results.getInt("price"));
+					searchTire.setTireID(results.getInt("tireID"));
+					/*
+					 * tireName.setText(results.getString("name"));
+					 * tireBrand.setText(results.getString("brand"));
+					 * rimDiameter.setText(results.getString("rimdiameter")); tirePrice.setText("$"
+					 * + results.getString("price")); tireID.setText(results.getString("tireID"));
+					 */
+					setSearchTire();
 				}
+				
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
@@ -166,19 +173,19 @@ public class InvoiceController {
 				ex.printStackTrace();
 			}
 		});
-		
+
 		installTires.setOnAction(e -> {
 			if (installTires.isSelected()) {
-				laborCost.setText(""+ (10 * (tireQuantity.getValue())));
-			}	
-			else laborCost.setText("0");
+				laborCost.setText("" + (10 * (tireQuantity.getValue())));
+			} else
+				laborCost.setText("0");
 		});
 
 		tireQuantity.valueProperty().addListener((observable, oldValue, newValue) -> {
 			if (installTires.isSelected()) {
-				laborCost.setText(""+ (10 * tireQuantity.getValue()));
-			}	
-			else laborCost.setText("0");
+				laborCost.setText("" + (10 * tireQuantity.getValue()));
+			} else
+				laborCost.setText("0");
 		});
 	}
 
@@ -187,20 +194,18 @@ public class InvoiceController {
 		tireBrand.setText(searchTire.getBrand());
 		tirePrice.setText(Double.toString(searchTire.getPrice()));
 		rimDiameter.setText(Integer.toString(searchTire.getRimDiameter()));
-		tireID.setText(Integer.toString(searchTire.getTireID()));
-		
+		// tireID.setText(Integer.toString(searchTire.getTireID()));
 	}
-/*
-	private void setTireNames() throws ClassNotFoundException, SQLException {
-		Statement statement = con.createStatement();
-		ResultSet rs = statement.executeQuery("Select * from tires order by name");
-		tireNameList.removeAll(tireNameList); // Adds every name from tires to thename list
-		while (rs.next()) {
-			tireNameList.add(rs.getString("name"));
-		} // Loads the tire name list in to the tire view
-		tireView.setItems(tireNameList);
-	}
-*/
+
+	/*
+	 * private void setTireNames() throws ClassNotFoundException, SQLException {
+	 * Statement statement = con.createStatement(); ResultSet rs =
+	 * statement.executeQuery("Select * from tires order by name");
+	 * tireNameList.removeAll(tireNameList); // Adds every name from tires to
+	 * thename list while (rs.next()) { tireNameList.add(rs.getString("name")); } //
+	 * Loads the tire name list in to the tire view tireView.setItems(tireNameList);
+	 * }
+	 */
 	private Customer CheckCustomer() {
 
 		StringBuilder errorMessage = new StringBuilder();
@@ -235,13 +240,11 @@ public class InvoiceController {
 				cStmt.registerOutParameter(5, java.sql.Types.INTEGER);
 				cStmt.execute();
 				int customerID = cStmt.getInt(5);
-				System.out.println(customerID);
 
-					Customer cust = new Customer(customerID, firstName.getText(), lastName.getText(),
-							phoneNumber.getText(), em.getText());
+				Customer cust = new Customer(customerID, firstName.getText(), lastName.getText(), phoneNumber.getText(),
+						em.getText());
 
-					return cust;
-				
+				return cust;
 
 			} catch (SQLException ex) {
 				ex.printStackTrace();
@@ -274,7 +277,7 @@ public class InvoiceController {
 				Date orderDate = new Date();
 				java.sql.Date sqlOrderDate = new java.sql.Date(orderDate.getTime());
 				PreparedStatement preparedStmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-				preparedStmt.setString(1, tireID.getText());
+				preparedStmt.setInt(1, searchTire.getTireID());
 				preparedStmt.setDate(2, (java.sql.Date) sqlOrderDate);
 				preparedStmt.setInt(3, tireQuantity.getValue());
 				preparedStmt.setDouble(4, Double.parseDouble(laborCost.getText()));
@@ -283,7 +286,7 @@ public class InvoiceController {
 				if (rs.next()) {
 					int orderID = rs.getInt(1);
 					Order order = new Order(orderID, sqlOrderDate, tireQuantity.getValue(),
-							Double.parseDouble(laborCost.getText()), Integer.parseInt(tireID.getText()));
+							Double.parseDouble(laborCost.getText()), searchTire.getTireID());
 					rs.close();
 					preparedStmt.close();
 					return order;

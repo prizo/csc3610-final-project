@@ -19,24 +19,24 @@ BorderPane root = TireShop.getRoot();
 	
 	@FXML
 	private void initialize() {
-		
-/*		root.setOnKeyPressed(e ->{
+/*		
+		DashBoardController.setOnKeyPressed(e ->{
 			
-			if(e.getCode() == KeyCode.DIGIT1) {
+			if(e.getCode() == KeyCode.NUMPAD1) {
 				logInButton.fire();
 			}
-			else if(e.getCode() == KeyCode.DIGIT2) {
+			else if(e.getCode() == KeyCode.NUMPAD2) {
 				adminButton.fire();
 			}
-			else if(e.getCode() == KeyCode.DIGIT3) {
+			else if(e.getCode() == KeyCode.NUMPAD3) {
 				reportsButton.fire();
 			}
-			else if(e.getCode() == KeyCode.DIGIT4) {
+			else if(e.getCode() == KeyCode.NUMPAD4) {
 				documentButton.fire();
 			}
 			
 		});
-*/		
+	*/	
 		logInButton.setOnAction(e -> {
 			try {
 				StackPane pane = FXMLLoader.load(getClass().getResource
