@@ -45,16 +45,16 @@ public class HomeController {
 /*		
 		root.setOnKeyPressed(e ->{
 			
-			if(e.getCode() == KeyCode.DIGIT1) {
+			if(e.getCode() == KeyCode.NUMPAD1) {
 				btnSearch.fire();
 			}
-			else if(e.getCode() == KeyCode.DIGIT2) {
+			else if(e.getCode() == KeyCode.NUMPAD2) {
 				btnInvoice.fire();
 			}
-			else if(e.getCode() == KeyCode.DIGIT3) {
+			else if(e.getCode() == KeyCode.NUMPAD3) {
 				btnAppointment.fire();
 			}
-			else if(e.getCode() == KeyCode.DIGIT4) {
+			else if(e.getCode() == KeyCode.NUMPAD4) {
 				btnLogout.fire();
 			}
 			
