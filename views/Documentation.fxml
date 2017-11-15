@@ -1,14 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.DocumentationController">
    <children>
       <Pane>
          <children>
-            <Button fx:id="btnBack" layoutX="358.0" layoutY="542.0" mnemonicParsing="false" text="Back" />
+            <Text fill="WHITE" layoutX="323.0" layoutY="162.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Version Control">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Separator layoutX="323.0" layoutY="185.0" prefWidth="381.0" />
+            <Hyperlink fx:id="linkGitHub" layoutX="317.0" layoutY="198.0" text="https://github.com/prizo/csc3610-final-project" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Hyperlink>
+            <Text fill="WHITE" layoutX="326.0" layoutY="303.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Database Schema">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Separator layoutX="326.0" layoutY="326.0" prefWidth="381.0" />
+            <Hyperlink fx:id="linkSchema" layoutX="320.0" layoutY="339.0" text="schema.pdf" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Hyperlink>
+            <Text fill="WHITE" layoutX="323.0" layoutY="433.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Presentation Slides">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Separator layoutX="323.0" layoutY="456.0" prefWidth="381.0" />
+            <VBox layoutX="319.0" layoutY="469.0" spacing="10.0">
+               <children>
+                  <Hyperlink fx:id="linkOct26" text="Oct-26-2017.pdf" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Hyperlink>
+                  <Hyperlink fx:id="linkNov09" text="Nov-09-2017.pdf" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Hyperlink>
+                  <Hyperlink fx:id="linkNov30" text="Nov-11-2017.pdf" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Hyperlink>
+               </children>
+            </VBox>
+            <Button fx:id="btnBack" layoutX="656.0" layoutY="594.0" mnemonicParsing="false" text="Back" />
          </children></Pane>
    </children>
 </StackPane>

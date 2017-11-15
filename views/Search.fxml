@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SearchController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SearchController">
    <children>
       <Group>
          <children>
@@ -27,7 +27,7 @@
                   </TableView>
                   <Label layoutX="7.0" layoutY="19.0" text="Search" textFill="WHITE" />
                   <Button fx:id="backButton" layoutX="856.0" layoutY="668.0" mnemonicParsing="false" text="Back" />
-                  <Button fx:id="addButton" layoutX="769.0" layoutY="668.0" mnemonicParsing="false" text="Add" />
+                  <Button fx:id="addButton" layoutX="790.0" layoutY="668.0" mnemonicParsing="false" text="Add" />
                </children>
             </Pane>
          </children>
