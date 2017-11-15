@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import javafx.application.Application;
+import javafx.application.HostServices;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -15,6 +16,7 @@ public class TireShop extends Application {
 //	private static Stage primaryStage;
 	private static BorderPane root;
 	private static Connection connection;
+	private static HostServices hostServices;
 	
 	@Override
 	public void start(Stage primaryStage) throws IOException {
@@ -22,6 +24,8 @@ public class TireShop extends Application {
 		initializeDB();
 
 //		TireShop.primaryStage = primaryStage;
+		
+		hostServices = getHostServices();
 		
 		root = new BorderPane();
 		root.setStyle("-fx-background-color: black;");
@@ -46,7 +50,7 @@ public class TireShop extends Application {
 			
 			// Establish a connection
 			connection = DriverManager.getConnection
-					  ("jdbc:mysql://localhost/tiregroup", "root", "csc4500");
+					  ("jdbc:mysql://localhost/tiregroup", "root", "csc");
 			System.out.println("Database connected");
 		}
 		catch (Exception ex) {
@@ -60,11 +64,15 @@ public class TireShop extends Application {
 //	}
 	
 	public static BorderPane getRoot() {
-		return TireShop.root;
+		return root;
 	}
 	
 	public static Connection getConnection() {
-		return TireShop.connection;
+		return connection;
+	}
+	
+	public static HostServices getHostService() {
+		return hostServices;
 	}
 	
 	public static void main(String[] args) {
