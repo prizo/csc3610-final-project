@@ -10,6 +10,20 @@ import java.sql.Statement;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.Properties;
+
+import javax.mail.BodyPart;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Multipart;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 import application.TireShop;
 import javafx.collections.FXCollections;
@@ -153,6 +167,15 @@ public class InvoiceController {
 					+ rimDiameter.getText() + "\nQuantity: " + tireQuantity.getValue() + "\nTire Price: "
 					+ tirePrice.getText() + "\nLabor Cost : $" + laborCost.getText());
 			txtinvoice.setText(invoiceString);
+			double totalPrice = (tireQuantity.getValue() * Double.parseDouble(tirePrice.getText()) + Double.parseDouble(laborCost.getText()));
+			String orderText = "You ordered " + tireQuantity.getValue() + " " + tireName.getText() + "\nEach tire cost $"+
+								tirePrice.getText() + "\nYour labor cost is $"+ laborCost.getText() + "\nYour total price is $" + totalPrice;
+			Alert invoiceAlert = new Alert(AlertType.INFORMATION);
+			invoiceAlert.setTitle("Order Placed");
+			invoiceAlert.setHeaderText("Thank you for shopping with group 4 tire shop.");
+			invoiceAlert.setContentText(orderText);
+			invoiceAlert.showAndWait();
+			sendEmail(invoiceCust.getEmail(), orderText);
 			ClearFields();
 		});
 
@@ -165,14 +188,14 @@ public class InvoiceController {
 			}
 		});
 
-		customerButton.setOnAction(e -> {
+/*		customerButton.setOnAction(e -> {
 			try {
 				StackPane pane = FXMLLoader.load(getClass().getResource("/views/Customer.fxml"));
 				root.setCenter(pane);
 			} catch (IOException ex) {
 				ex.printStackTrace();
 			}
-		});
+		});*/
 
 		installTires.setOnAction(e -> {
 			if (installTires.isSelected()) {
@@ -356,7 +379,7 @@ public class InvoiceController {
 		tireName.clear();
 		tireBrand.clear();
 		rimDiameter.clear();
-		tireQuantity.getValueFactory().setValue(0);
+		tireQuantity.getValueFactory().setValue(1);
 		tirePrice.clear();
 		laborCost.setText("0");
 		firstName.clear();
@@ -364,5 +387,40 @@ public class InvoiceController {
 		phoneNumber.clear();
 		em.clear();
 		installTires.setSelected(false);
+	}
+	
+	private void sendEmail(String recipientEmail, String emailText) {
+		final String username = "Group4TireShop@gmail.com";
+	    final String password = "csc3810'";
+
+	    Properties props = new Properties();
+	    props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+	    props.put("mail.smtp.auth", true);
+	    props.put("mail.smtp.starttls.enable", true);
+	    props.put("mail.smtp.host", "smtp.gmail.com");
+	    props.put("mail.smtp.port", "587");
+
+
+	    Session session = Session.getInstance(props,
+	            new javax.mail.Authenticator() {
+	                protected PasswordAuthentication getPasswordAuthentication() {
+	                    return new PasswordAuthentication(username, password);
+	                }
+	            });
+
+	    try {
+
+	        Message message = new MimeMessage(session);
+	        message.setFrom(new InternetAddress("no-reply@gmail.com"));
+	        message.setRecipients(Message.RecipientType.TO,
+	                InternetAddress.parse(recipientEmail));
+	        message.setSubject("Thank you for ordering tires using group 4 tire shop");
+	        message.setText(emailText);
+
+	        Transport.send(message);
+
+	    } catch (MessagingException e) {
+	        throw new RuntimeException(e);
+	    }
 	}
 }

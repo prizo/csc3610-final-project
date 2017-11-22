@@ -2,7 +2,8 @@
 <classpath>
 	<classpathentry kind="src" path=""/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="C:/Users/Pablo/commons-codec-1.10/commons-codec-1.10.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Pablo/mysql-connector-java-5.1.44-bin.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Java/mysql-connector-java-5.1.44/mysql-connector-java-5.1.44-bin.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Java/commons-codec-1.10/commons-codec-1.10.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Java/javamail-1.4.7/mail.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
