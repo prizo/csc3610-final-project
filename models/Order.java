@@ -10,7 +10,6 @@ public class Order {
 	private double laborCost;
 	private int tireID;			// FK
 	
-	// Constructor for receiving objects from database
 	public Order(int orderID, Date orderDate, int quantity, double laborCost, int tireID) {
 		this.orderID = orderID;
 		this.orderDate = orderDate;
@@ -19,17 +18,6 @@ public class Order {
 		this.tireID = tireID;
 	}
 
-	// Constructor for inserting objects into database
-	public Order(Date orderDate, int quantity, double laborCost, int tireID) {
-		this.orderDate = orderDate;
-		this.quantity = quantity;
-		this.tireID = tireID;
-		this.laborCost = laborCost;
-	}
-
-	public double getLaborCost() {
-		return laborCost;
-	}
 	public int getOrderID() {
 		return orderID;
 	}
@@ -42,14 +30,18 @@ public class Order {
 		return quantity;
 	}
 
+	public double getLaborCost() {
+		return laborCost;
+	}
+
 	public int getTireID() {
 		return tireID;
 	}
 
 	@Override
 	public String toString() {
-		return "Order [orderID=" + orderID + ", orderDate=" + orderDate + ", quantity=" + quantity + ", tireID="
-				+ tireID + "]";
+		return "Order [orderID=" + orderID + ", orderDate=" + orderDate + ", quantity=" + quantity + ", laborCost="
+				+ laborCost + ", tireID=" + tireID + "]";
 	}
-
+	
 }

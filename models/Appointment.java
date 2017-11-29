@@ -11,17 +11,8 @@ public class Appointment {
 	private int customerID;			// FK
 	private int employeeID;			// FK
 	
-	// Constructor for receiving objects from database
 	public Appointment(int appointmentID, Date appointmentDate, Time appointmentTime, int customerID, int employeeID) {
 		this.appointmentID = appointmentID;
-		this.appointmentDate = appointmentDate;
-		this.appointmentTime = appointmentTime;
-		this.customerID = customerID;
-		this.employeeID = employeeID;
-	}
-
-	// Constructor for inserting objects into database
-	public Appointment(Date appointmentDate, Time appointmentTime, int customerID, int employeeID) {
 		this.appointmentDate = appointmentDate;
 		this.appointmentTime = appointmentTime;
 		this.customerID = customerID;

@@ -11,8 +11,7 @@ public class Employee {
 	private Date startDate;
 	private boolean isAdmin;
 	
-	// Constructor for receiving objects from database
-	public Employee(int employeeID, String firstName, String lastName, String password, Date startDate,boolean isAdmin) {
+	public Employee(int employeeID, String firstName, String lastName, String password, Date startDate, boolean isAdmin) {
 		this.employeeID = employeeID;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -20,17 +19,6 @@ public class Employee {
 		this.startDate = startDate;
 		this.isAdmin = isAdmin;
 	}
-
-	// Constructor for inserting objects into database
-	public Employee(String firstName, String lastName, String password, Date startDate, boolean isAdmin) {
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.password = password;
-		this.startDate = startDate;
-		this.isAdmin = isAdmin;
-	}
-
-	
 
 	public int getEmployeeID() {
 		return employeeID;

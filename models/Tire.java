@@ -1,6 +1,7 @@
 package models;
 
 public class Tire {
+	
 	private int tireID;
 	private String name;
 	private double price;
@@ -19,8 +20,6 @@ public class Tire {
 		this.rimDiameter = rimDiameter;
 	}
 
-	
-
 	public Tire(Tire another) {
 		this.tireID = another.getTireID();
 		this.name = another.getName();
@@ -28,8 +27,6 @@ public class Tire {
 		this.brand = another.getBrand();
 		this.rimDiameter = another.getRimDiameter();
 	}
-
-
 
 	public int getTireID() {
 		return tireID;
@@ -69,6 +66,12 @@ public class Tire {
 
 	public void setRimDiameter(int rimDiameter) {
 		this.rimDiameter = rimDiameter;
+	}
+
+	@Override
+	public String toString() {
+		return "Tire [tireID=" + tireID + ", name=" + name + ", price=" + price + ", brand=" + brand + ", rimDiameter="
+				+ rimDiameter + "]";
 	}
 	
 }
