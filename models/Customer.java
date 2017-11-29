@@ -8,17 +8,8 @@ public class Customer {
 	private String phoneNumber;
 	private String email;
 	
-	// Constructor for receiving objects from database
 	public Customer(int customerID, String firstName, String lastName, String phoneNumber, String email) {
 		this.customerID = customerID;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.phoneNumber = phoneNumber;
-		this.email = email;
-	}
-
-	// Constructor for inserting objects into database
-	public Customer(String firstName, String lastName, String phoneNumber, String email) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.phoneNumber = phoneNumber;

@@ -8,11 +8,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
-
 import helperclasses.JDBCConnector;
 import helperclasses.SceneSwitcher;
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -41,6 +41,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import misc.DateComparator;
 import models.Employee;
 
 public class AdminPageController {
@@ -76,10 +77,10 @@ public class AdminPageController {
 	
 	@FXML
 	private void initialize() {
-		showCRUD();
+		show();
 	}
 	
-	public void showCRUD() {
+	public void show() {
 
 		btnCreate.setOnAction(e -> {
 			create();
@@ -117,6 +118,8 @@ public class AdminPageController {
 		});
 		
 		List<Employee> data = read();
+		
+		Collections.sort(data, new DateComparator());
 		
 		empData.addAll(data);
 		

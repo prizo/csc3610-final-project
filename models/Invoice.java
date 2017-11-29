@@ -9,18 +9,9 @@ public class Invoice {
 	private int customerID;		// FK
 	private int employeeID;		// FK
 	private int orderID;		// FK
-	
-	// Constructor for receiving objects from database
+
 	public Invoice(int invoiceID, Date invoiceDate, int customerID, int employeeID, int orderID) {
 		this.invoiceID = invoiceID;
-		this.invoiceDate = invoiceDate;
-		this.customerID = customerID;
-		this.employeeID = employeeID;
-		this.orderID = orderID;
-	}
-
-	// Constructor for inserting objects into database
-	public Invoice(Date invoiceDate, int customerID, int employeeID, int orderID, int tireID) {
 		this.invoiceDate = invoiceDate;
 		this.customerID = customerID;
 		this.employeeID = employeeID;
