@@ -1,17 +1,16 @@
 package controllers;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import application.TireShop;
+import helperclasses.JDBCConnector;
+import helperclasses.SceneSwitcher;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
@@ -19,8 +18,6 @@ import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.BorderPane;
 import javafx.util.Callback;
 import models.Tire;
 import javafx.collections.transformation.FilteredList;
@@ -28,9 +25,10 @@ import javafx.collections.transformation.SortedList;
 
 public class SearchController {
 
-	BorderPane root = TireShop.getRoot();
-	Connection con = TireShop.getConnection();
 	static Tire searchTire = new Tire();
+	
+	SceneSwitcher sceneSwitcher = new SceneSwitcher();
+	Connection con = new JDBCConnector().getConnection();
 
 	@FXML
 	private TextField filterField;
@@ -132,13 +130,7 @@ public class SearchController {
 		tireTable.setItems(sortedData);
 		
 		backButton.setOnAction(e -> {
-			try {
-				StackPane pane = FXMLLoader.load(getClass().getResource
-				  ("/views/Home.fxml"));
-				root.setCenter(pane);
-			} catch (IOException ex) {
-				ex.printStackTrace();
-			}
+			sceneSwitcher.switchScene(backButton, "/views/Home.fxml");
 		});
 		
 		addButton.setOnAction(e -> {
@@ -148,14 +140,9 @@ public class SearchController {
 				alert.showAndWait();
 			}
 			else {
-			 searchTire = new Tire(tireTable.getSelectionModel().getSelectedItem());
-				try {
-					StackPane pane = FXMLLoader.load(getClass().getResource
-					  ("/views/Invoice.fxml"));
-					root.setCenter(pane);
-				} catch (IOException ex) {
-					ex.printStackTrace();
-				}
+				searchTire = new Tire(tireTable.getSelectionModel().getSelectedItem());
+				
+				sceneSwitcher.switchScene(addButton, "/views/Invoice.fxml");
 			}
 		});	
 		

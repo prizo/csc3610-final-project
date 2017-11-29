@@ -1,25 +1,23 @@
 package controllers;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import application.TireShop;
+
+import helperclasses.JDBCConnector;
+import helperclasses.SceneSwitcher;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.BorderPane;
 
 public class AdminLoginController {
-	
-	BorderPane root = TireShop.getRoot();
-	Connection connection = TireShop.getConnection();
+
+	SceneSwitcher sceneSwitcher = new SceneSwitcher();
+	Connection connection = new JDBCConnector().getConnection();
 	
 	// Access user throughout application
 	public static ResultSet user;
@@ -56,22 +54,10 @@ public class AdminLoginController {
 				if (user.next()) {
 					if (user.getBoolean("isAdmin")) {
 						if (user.getString("password") == null) {
-							try {
-								StackPane pane = FXMLLoader.load(getClass().getResource
-								  ("/views/AdminPasswordCreate.fxml"));
-								root.setCenter(pane);
-							} catch (IOException ex) {
-								ex.printStackTrace();
-							}
+							sceneSwitcher.switchScene(btnEnter, "/views/AdminPasswordCreate.fxml");
 						}
 						else {
-							try {
-								StackPane pane = FXMLLoader.load(getClass().getResource
-								  ("/views/AdminPassword.fxml"));
-								root.setCenter(pane);
-							} catch (IOException ex) {
-								ex.printStackTrace();
-							}
+							sceneSwitcher.switchScene(btnEnter, "/views/AdminPassword.fxml");
 						}
 					}
 					else {
@@ -93,13 +79,7 @@ public class AdminLoginController {
 		});
 		
 		btnBack.setOnAction(e -> {
-			try {
-				StackPane pane = FXMLLoader.load(getClass().getResource
-				  ("/views/Dashboard.fxml"));
-				root.setCenter(pane);
-			} catch (IOException ex) {
-				ex.printStackTrace();
-			}
+			sceneSwitcher.switchScene(btnBack, "/views/Dashboard.fxml");
 		});
 		
 	}

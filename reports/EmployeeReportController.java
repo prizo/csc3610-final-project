@@ -1,32 +1,29 @@
 package reports;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import application.TireShop;
+import helperclasses.JDBCConnector;
+import helperclasses.SceneSwitcher;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.BorderPane;
 import javafx.util.Callback;
 import models.Employee;
 
 public class EmployeeReportController {
-
-	BorderPane root = TireShop.getRoot();
-	Connection con = TireShop.getConnection();
+	
+	SceneSwitcher sceneSwitcher = new SceneSwitcher();
+	Connection con = new JDBCConnector().getConnection();
 
 	@FXML
 	private TextField sumField;
@@ -106,63 +103,27 @@ public class EmployeeReportController {
 		sumField.setText(Integer.toString(masterData.size()));
 		
 		backButton.setOnAction(e -> {
-			try {
-				StackPane pane = FXMLLoader.load(getClass().getResource
-				  ("/views/Dashboard.fxml"));
-				root.setCenter(pane);
-			} catch (IOException ex) {
-				ex.printStackTrace();
-			}
+			sceneSwitcher.switchScene(backButton, "/views/Dashboard.fxml");
 		});
 		
 		employeeButton.setOnAction(e -> {
-			try {
-				StackPane pane = FXMLLoader.load(getClass().getResource
-				  ("/reports/EmployeeReport.fxml"));
-				root.setCenter(pane);
-			} catch (IOException ex) {
-				ex.printStackTrace();
-			}
+			sceneSwitcher.switchScene(employeeButton, "/reports/EmployeeReport.fxml");
 		});
 		
 		tireButton.setOnAction(e -> {
-			try {
-				StackPane pane = FXMLLoader.load(getClass().getResource
-				  ("/reports/TireReport.fxml"));
-				root.setCenter(pane);
-			} catch (IOException ex) {
-				ex.printStackTrace();
-			}
+			sceneSwitcher.switchScene(tireButton, "/reports/TireReport.fxml");
 		});
 		
 		customerButton.setOnAction(e -> {
-			try {
-				StackPane pane = FXMLLoader.load(getClass().getResource
-				  ("/reports/CustomerReport.fxml"));
-				root.setCenter(pane);
-			} catch (IOException ex) {
-				ex.printStackTrace();
-			}
+			sceneSwitcher.switchScene(customerButton, "/reports/CustomerReport.fxml");
 		});
 		
 		orderButton.setOnAction(e -> {
-			try {
-				StackPane pane = FXMLLoader.load(getClass().getResource
-				  ("/reports/OrderReport.fxml"));
-				root.setCenter(pane);
-			} catch (IOException ex) {
-				ex.printStackTrace();
-			}
+			sceneSwitcher.switchScene(orderButton, "/reports/OrderReport.fxml");
 		});
 		
 		invoiceButton.setOnAction(e -> {
-			try {
-				StackPane pane = FXMLLoader.load(getClass().getResource
-				  ("/reports/InvoiceReport.fxml"));
-				root.setCenter(pane);
-			} catch (IOException ex) {
-				ex.printStackTrace();
-			}
+			sceneSwitcher.switchScene(invoiceButton, "/reports/InvoiceReport.fxml");
 		});
 	}
 }

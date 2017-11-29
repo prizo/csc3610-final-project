@@ -12,11 +12,15 @@ import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
-import application.TireShop;
+
+import helperclasses.JDBCConnector;
+import helperclasses.SceneSwitcher;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -26,132 +30,132 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.control.Separator;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import models.Employee;
 
 public class AdminPageController {
-	
-	BorderPane root = TireShop.getRoot();
-	Connection connection = TireShop.getConnection();
+
 	ResultSet user = AdminLoginController.getUser();
 	
+	SceneSwitcher sceneSwitcher = new SceneSwitcher();
+	Connection connection = new JDBCConnector().getConnection();
+	
 	@FXML
-	private VBox vbox;
+	private Button btnCreate, btnUpdate, btnDelete, btnBack;
+	
+	@FXML
+	private TableView<Employee> tableEmployee;
+	
+	@FXML
+	private TableColumn<Employee, Integer> colID;
+	
+	@FXML
+	private TableColumn<Employee, String> colFName;
+	
+	@FXML
+	private TableColumn<Employee, String> colLName;
+	
+	@FXML
+	private TableColumn<Employee, Date> colDate;
+	
+	@FXML
+	private TableColumn<Employee, String> colAdmin;
+	
+	@FXML
+	private ObservableList<Employee> empData = FXCollections.observableArrayList();
 	
 	@FXML
 	private void initialize() {
-		startApp();
+		showCRUD();
 	}
 	
-	public void startApp() {
+	public void showCRUD() {
 
-		Button create = new Button();
-		create.setText("Create New Employee");
-		
-		create.setOnAction(e -> {
+		btnCreate.setOnAction(e -> {
 			create();
 		});
 		
-		Button back = new Button();
-		back.setText("Back");
+		btnUpdate.setOnAction(e -> {
+			if (tableEmployee.getSelectionModel().getSelectedItem() == null) {
+				Alert alert = new Alert(AlertType.ERROR, "Please select an employee to update!");
+				alert.showAndWait();
+			}
+			else {
+				update(tableEmployee.getSelectionModel().getSelectedItem().getEmployeeID());
+			}
+		});
 		
-		back.setOnAction(e -> {
+		btnDelete.setOnAction(e -> {
+			if (tableEmployee.getSelectionModel().getSelectedItem() == null) {
+				Alert alert = new Alert(AlertType.ERROR, "Please select an employee to delete!");
+				alert.showAndWait();
+			}
+			else {
+				delete(tableEmployee.getSelectionModel().getSelectedItem().getEmployeeID());
+			}
+		});
+		
+		btnBack.setOnAction(e -> {
+			sceneSwitcher.switchScene(btnBack, "/views/Dashboard.fxml");
+			
 			try {
-				StackPane pane = FXMLLoader.load(getClass().getResource
-				  ("/views/Dashboard.fxml"));
-				root.setCenter(pane);
-				
 				System.out.println("Admin " + user.getString("firstName") + " " + user.getString("lastName") +
 						" logged out on " + new Date());
-			} catch (Exception ex) {
-				ex.printStackTrace();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
 			}
 		});
 		
 		List<Employee> data = read();
-		vbox.setPadding(new Insets(10));
-		Label idHeader = new Label("ID");
-		Label firstNameHeader = new Label("First Name");
-		Label lastNameHeader = new Label("Last Name");
-		Label startDateHeader = new Label("Start Date");
-		Label isAdminHeader = new Label("Admin");
 		
-		idHeader.setFont(new Font("Arial", 15));
-		firstNameHeader.setFont(new Font("Arial", 15));
-		lastNameHeader.setFont(new Font("Arial", 15));
-		startDateHeader.setFont(new Font("Arial", 15));
-		isAdminHeader.setFont(new Font("Arial", 15));
+		empData.addAll(data);
 		
-		idHeader.setStyle("-fx-text-fill: white;");
-		firstNameHeader.setStyle("-fx-text-fill: white;");
-		lastNameHeader.setStyle("-fx-text-fill: white;");
-		startDateHeader.setStyle("-fx-text-fill: white;");
-		isAdminHeader.setStyle("-fx-text-fill: white;");
+		tableEmployee.setItems(empData);
 		
-		GridPane gridPane = new GridPane();
-		gridPane.setHgap(10);
-		gridPane.setVgap(10);
+		colID.setCellValueFactory(new Callback<CellDataFeatures<Employee, Integer>, ObservableValue<Integer>>(){
+			public ObservableValue<Integer> call(CellDataFeatures<Employee, Integer> p) {
+				ObservableValue<Integer> obs = new ReadOnlyObjectWrapper<>(p.getValue().getEmployeeID());
+				return obs;
+			}
+		});
 		
-		gridPane.add(idHeader, 0, 0);
-		gridPane.add(firstNameHeader, 1, 0);
-		gridPane.add(lastNameHeader, 2, 0);
-		gridPane.add(startDateHeader, 3, 0);
-		gridPane.add(isAdminHeader, 4, 0);
+		colFName.setCellValueFactory(new Callback<CellDataFeatures<Employee, String>, ObservableValue<String>>(){
+			public ObservableValue<String> call(CellDataFeatures<Employee, String> p) {
+				ObservableValue<String> obs = new ReadOnlyObjectWrapper<>(p.getValue().getFirstName());
+				return obs;
+			}
+		});
 		
-		Separator separator = new Separator();
-		separator.setOrientation(Orientation.HORIZONTAL);
+		colLName.setCellValueFactory(new Callback<CellDataFeatures<Employee, String>, ObservableValue<String>>(){
+			public ObservableValue<String> call(CellDataFeatures<Employee, String> p) {
+				ObservableValue<String> obs = new ReadOnlyObjectWrapper<>(p.getValue().getLastName());
+				return obs;
+			}
+		});
 		
-		gridPane.add(separator, 0, 1, 7, 1);
+		colDate.setCellValueFactory(new Callback<CellDataFeatures<Employee, Date>, ObservableValue<Date>>(){
+			public ObservableValue<Date> call(CellDataFeatures<Employee, Date> p) {
+				ObservableValue<Date> obs = new ReadOnlyObjectWrapper<>(p.getValue().getStartDate());
+				return obs;
+			}
+		});
 		
-		int i = 2;
-		
-		for (Employee employee : data) {
-			
-			Label id = new Label(Integer.toString(employee.getEmployeeID()));
-			Label firstName = new Label(employee.getFirstName());
-			Label lastName = new Label(employee.getLastName());
-			Label startDate = new Label(employee.getStartDate().toString());
-			String admin = employee.isAdmin() ? "Yes": "No";
-			Label isAdmin = new Label(admin);
-			
-			id.setStyle("-fx-text-fill: white;");
-			firstName.setStyle("-fx-text-fill: white;");
-			lastName.setStyle("-fx-text-fill: white;");
-			startDate.setStyle("-fx-text-fill: white;");
-			isAdmin.setStyle("-fx-text-fill: white;");
-			
-			Button edit = new Button("Edit");
-			edit.setOnAction(e -> {
-				update(employee.getEmployeeID());
-			});
-			
-			Button delete = new Button("Delete");
-			delete.setOnAction(e -> {
-				delete(employee.getEmployeeID());
-			});
-			
-			gridPane.add(id, 0, i, 1, 1);
-			gridPane.add(firstName, 1, i, 1, 1);
-			gridPane.add(lastName, 2, i, 1, 1);
-			gridPane.add(startDate, 3, i, 1, 1);
-			gridPane.add(isAdmin, 4, i, 1, 1);
-			gridPane.add(edit, 5, i, 1, 1);
-			gridPane.add(delete, 6, i, 1, 1);
-			i++;
-			
-		}
-		
-		vbox.getChildren().addAll(create, gridPane, back);
+		colAdmin.setCellValueFactory(new Callback<CellDataFeatures<Employee, String>, ObservableValue<String>>(){
+			public ObservableValue<String> call(CellDataFeatures<Employee, String> p) {
+				ObservableValue<String> obs = new ReadOnlyObjectWrapper<>(p.getValue().isAdmin() ? "Yes": "No");
+				return obs;
+			}
+		});
 		
 	}
 
@@ -242,13 +246,7 @@ public class AdminPageController {
 				alert.showAndWait();
 			}
 			
-			try {
-				StackPane pane = FXMLLoader.load(getClass().getResource
-				  ("/views/AdminPage.fxml"));
-				root.setCenter(pane);
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
+			sceneSwitcher.switchScene(btnCreate, "/views/AdminPage.fxml");
 			
 			((Node)(e.getSource())).getScene().getWindow().hide();
 			
@@ -379,13 +377,7 @@ public class AdminPageController {
 				alert.showAndWait();
 			}
 			
-			try {
-				StackPane pane = FXMLLoader.load(getClass().getResource
-				  ("/views/AdminPage.fxml"));
-				root.setCenter(pane);
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
+			sceneSwitcher.switchScene(btnUpdate, "/views/AdminPage.fxml");
 			
 			((Node)(e.getSource())).getScene().getWindow().hide();
 			
@@ -411,13 +403,7 @@ public class AdminPageController {
 				alert.showAndWait();
 			}
 			
-			try {
-				StackPane pane = FXMLLoader.load(getClass().getResource
-				  ("/views/AdminPage.fxml"));
-				root.setCenter(pane);
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
+			sceneSwitcher.switchScene(btnUpdate, "/views/AdminPage.fxml");
 			
 			((Node)(e.getSource())).getScene().getWindow().hide();
 		});
@@ -435,7 +421,7 @@ public class AdminPageController {
 		hbox.getChildren().addAll(labels, fields);
 		stackPane.getChildren().add(hbox);
 		
-		updateStage.setTitle("Edit Employee");
+		updateStage.setTitle("Update Employee");
 		updateStage.setScene(scene);
 		updateStage.show();
 		
@@ -483,16 +469,12 @@ public class AdminPageController {
 					alert1.showAndWait();
 				}
 				
-				try {
-					StackPane pane = FXMLLoader.load(getClass().getResource
-					  ("/views/AdminPage.fxml"));
-					root.setCenter(pane);
-				} catch (Exception ex) {
-					ex.printStackTrace();
-				}
-				
 			}
-		} catch (NoSuchElementException ex) {}
+		} catch (NoSuchElementException ex) {
+			ex.printStackTrace();
+		}
+		
+		sceneSwitcher.switchScene(btnDelete, "/views/AdminPage.fxml");
 		
 	}
 

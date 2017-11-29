@@ -1,22 +1,19 @@
 package controllers;
 
-import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
-import application.TireShop;
+
+import helperclasses.SceneSwitcher;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
-import javafx.scene.input.KeyCode;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 
 public class HomeController {
 	
-	BorderPane root = TireShop.getRoot();
 	ResultSet user = LoginController.getUser();
+	
+	SceneSwitcher sceneSwitcher = new SceneSwitcher();
 	
 	@FXML
 	private Button btnSearch;
@@ -39,67 +36,30 @@ public class HomeController {
 		try {
 			txtInfo.setText("Logged in as " + user.getString("firstName") + " " 
 					+ user.getString("lastName") + " on " + new Date());
-		} catch (SQLException ex) {
-			ex.printStackTrace();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
 		}
-/*		
-		root.setOnKeyPressed(e ->{
-			
-			if(e.getCode() == KeyCode.NUMPAD1) {
-				btnSearch.fire();
-			}
-			else if(e.getCode() == KeyCode.NUMPAD2) {
-				btnInvoice.fire();
-			}
-			else if(e.getCode() == KeyCode.NUMPAD3) {
-				btnAppointment.fire();
-			}
-			else if(e.getCode() == KeyCode.NUMPAD4) {
-				btnLogout.fire();
-			}
-			
-		});
-*/
+		
 		btnSearch.setOnAction(e -> {
-			try {
-				StackPane pane = FXMLLoader.load(getClass().getResource
-				  ("/views/Search.fxml"));
-				root.setCenter(pane);
-			} catch (IOException ex) {
-				ex.printStackTrace();
-			}
+			sceneSwitcher.switchScene(btnSearch, "/views/Search.fxml");
 		});
 		
 		btnInvoice.setOnAction(e -> {
-			try {
-				StackPane pane = FXMLLoader.load(getClass().getResource
-				  ("/views/Invoice.fxml"));
-				root.setCenter(pane);
-			} catch (IOException ex) {
-				ex.printStackTrace();
-			}
+			sceneSwitcher.switchScene(btnInvoice, "/views/Invoice.fxml");
 		});
 		
 		btnAppointment.setOnAction(e -> {
-			try {
-				StackPane pane = FXMLLoader.load(getClass().getResource
-				  ("/views/Appointment.fxml"));
-				root.setCenter(pane);
-			} catch (IOException ex) {
-				ex.printStackTrace();
-			}
+			sceneSwitcher.switchScene(btnAppointment, "/views/Appointment.fxml");
 		});
 		
 		btnLogout.setOnAction(e -> {
-			try {
-				StackPane pane = FXMLLoader.load(getClass().getResource
-				  ("/views/Dashboard.fxml"));
-				root.setCenter(pane);
+			sceneSwitcher.switchScene(btnLogout, "/views/Dashboard.fxml");
 
-				System.out.println("Employee " + user.getString("firstName") + " " + user.getString("lastName") +
-						" logged out on " + new Date());
-			} catch (Exception ex) {
-				ex.printStackTrace();
+			try {
+				System.out.println("Employee " + user.getString("firstName") + " " 
+						+ user.getString("lastName") + " logged out on " + new Date());
+			} catch (SQLException e1) {
+				e1.printStackTrace();
 			}
 			
 			user = null;

@@ -1,10 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AdminPageController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AdminPageController">
    <children>
-      <VBox fx:id="vbox" spacing="20.0" />
+      <Pane>
+         <children>
+            <TableView fx:id="tableEmployee" layoutX="211.0" layoutY="184.0">
+              <columns>
+                <TableColumn fx:id="colID" prefWidth="75.0" text="ID" />
+                <TableColumn fx:id="colFName" prefWidth="150.0" text="First Name" />
+                  <TableColumn fx:id="colLName" minWidth="4.0" prefWidth="150.0" text="Last Name" />
+                  <TableColumn fx:id="colDate" minWidth="0.0" prefWidth="150.0" text="Start Date" />
+                  <TableColumn fx:id="colAdmin" prefWidth="75.0" text="Admin" />
+              </columns>
+            </TableView>
+            <HBox layoutX="211.0" layoutY="131.0" spacing="20.0">
+               <children>
+                  <Button fx:id="btnCreate" mnemonicParsing="false" text="Create" />
+                  <Button fx:id="btnUpdate" mnemonicParsing="false" text="Update" />
+                  <Button fx:id="btnDelete" mnemonicParsing="false" text="Delete" />
+               </children>
+            </HBox>
+            <Button fx:id="btnBack" layoutX="762.0" layoutY="602.0" mnemonicParsing="false" text="Back" />
+         </children>
+      </Pane>
    </children>
 </StackPane>
