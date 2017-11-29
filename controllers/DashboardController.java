@@ -1,80 +1,33 @@
 package controllers;
 
-import java.io.IOException;
-
-import application.TireShop;
+import helperclasses.SceneSwitcher;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
-import javafx.scene.input.KeyCode;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.BorderPane;
 
 public class DashboardController {
-
-BorderPane root = TireShop.getRoot();
+	
+	SceneSwitcher sceneSwitcher = new SceneSwitcher();
 	
 	@FXML
-	private Button logInButton, adminButton, reportsButton, documentButton;
+	private Button btnLogin, btnAdmin, btnReport, btnDocument;
 	
 	@FXML
 	private void initialize() {
-/*		
-		DashBoardController.setOnKeyPressed(e ->{
-			
-			if(e.getCode() == KeyCode.NUMPAD1) {
-				logInButton.fire();
-			}
-			else if(e.getCode() == KeyCode.NUMPAD2) {
-				adminButton.fire();
-			}
-			else if(e.getCode() == KeyCode.NUMPAD3) {
-				reportsButton.fire();
-			}
-			else if(e.getCode() == KeyCode.NUMPAD4) {
-				documentButton.fire();
-			}
-			
-		});
-	*/	
-		logInButton.setOnAction(e -> {
-			try {
-				StackPane pane = FXMLLoader.load(getClass().getResource
-				  ("/views/Login.fxml"));
-				root.setCenter(pane);
-			} catch (IOException ex) {
-				ex.printStackTrace();
-			}
+		
+		btnLogin.setOnAction(e -> {
+			sceneSwitcher.switchScene(btnLogin, "/views/Login.fxml");
 		});
 		
-		reportsButton.setOnAction(e -> {
-			try {
-				StackPane pane = FXMLLoader.load(getClass().getResource
-				  ("/reports/EmployeeReport.fxml"));
-				root.setCenter(pane);
-			} catch (IOException ex) {
-				ex.printStackTrace();
-			}
+		btnAdmin.setOnAction(e -> {
+			sceneSwitcher.switchScene(btnAdmin, "/views/AdminLogin.fxml");
 		});
 		
-		adminButton.setOnAction(e -> {
-			try {
-				StackPane pane = FXMLLoader.load(getClass().getResource
-				  ("/views/AdminLogin.fxml"));
-				root.setCenter(pane);
-			} catch (IOException ex) {
-				ex.printStackTrace();
-			}
+		btnReport.setOnAction(e -> {
+			sceneSwitcher.switchScene(btnReport, "/reports/EmployeeReport.fxml");
 		});
 		
-		documentButton.setOnAction(e -> {
-			try {
-				StackPane pane = FXMLLoader.load(getClass().getResource
-				  ("/views/Documentation.fxml"));
-				root.setCenter(pane);
-			} catch (IOException ex) {
-				ex.printStackTrace();
-			}
+		btnDocument.setOnAction(e -> {
+			sceneSwitcher.switchScene(btnDocument, "/views/Documentation.fxml");
 		});
 		
 	}

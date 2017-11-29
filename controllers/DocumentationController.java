@@ -4,29 +4,27 @@ import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 
-import application.TireShop;
+import helperclasses.HostServicesProvider;
+import helperclasses.SceneSwitcher;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
 
 public class DocumentationController {
 	
-	BorderPane root = TireShop.getRoot();
+	SceneSwitcher sceneSwitcher = new SceneSwitcher();
 	
 	@FXML
-	private Hyperlink linkGitHub;
+	private Hyperlink githubLink;
 	
 	@FXML
-	private Hyperlink linkSchema;
+	private Hyperlink pdfOct26;
 	
 	@FXML
-	private Hyperlink linkOct26;
+	private Hyperlink pdfNov09;
 	
 	@FXML
-	private Hyperlink linkNov09;
+	private Hyperlink pdfNov30;
 	
 	@FXML
 	private Button btnBack;
@@ -34,16 +32,11 @@ public class DocumentationController {
 	@FXML
 	private void initialize() {
 		
-		linkGitHub.setOnAction(e -> {
-			linkGitHub = new Hyperlink("https://github.com/prizo/csc3610-final-project");
-			TireShop.getHostService().showDocument(linkGitHub.getText());
+		githubLink.setOnAction(e -> {
+			HostServicesProvider.INSTANCE.getHostServices().showDocument(githubLink.getText());
 		});
 		
-		linkSchema.setOnAction(e -> {
-			
-		});
-		
-		linkOct26.setOnAction(e -> {
+		pdfOct26.setOnAction(e -> {
 			try {
 				Desktop.getDesktop().open(new File("resources/Oct-26-2017.pdf"));
 			} catch (IOException e1) {
@@ -51,7 +44,7 @@ public class DocumentationController {
 			}
 		});
 		
-		linkNov09.setOnAction(e -> {
+		pdfNov09.setOnAction(e -> {
 			try {
 				Desktop.getDesktop().open(new File("resources/Nov-09-2017.pdf"));
 			} catch (IOException e1) {
@@ -59,14 +52,12 @@ public class DocumentationController {
 			}
 		});
 		
+		pdfNov30.setOnAction(e -> {
+			
+		});
+		
 		btnBack.setOnAction(e -> {
-			try {
-				StackPane pane = FXMLLoader.load(getClass().getResource
-				  ("/views/Dashboard.fxml"));
-				root.setCenter(pane);
-			} catch (IOException ex) {
-				ex.printStackTrace();
-			}
+			sceneSwitcher.switchScene(btnBack, "/views/Dashboard.fxml");
 		});
 		
 	}

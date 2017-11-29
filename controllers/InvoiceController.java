@@ -1,6 +1,5 @@
 package controllers;
 
-import java.io.IOException;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,28 +7,20 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.Properties;
-
-import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
-import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
-import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
 
-import application.TireShop;
+import helperclasses.JDBCConnector;
+import helperclasses.SceneSwitcher;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -40,8 +31,6 @@ import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.BorderPane;
 import models.Customer;
 import models.Invoice;
 import models.Order;
@@ -49,10 +38,11 @@ import models.Tire;
 
 public class InvoiceController {
 
-	BorderPane root = TireShop.getRoot();
-	Connection con = TireShop.getConnection();
 	ResultSet user = LoginController.getUser();
 	Tire searchTire = SearchController.getTire();
+	
+	SceneSwitcher sceneSwitcher = new SceneSwitcher();
+	Connection con = new JDBCConnector().getConnection();
 
 	@FXML
 	private ListView<String> tireView;
@@ -116,7 +106,7 @@ public class InvoiceController {
 		});
 
 		clearButton.setOnAction((event) -> {
-			ClearFields();
+			clearFields();
 
 		});
 		cmbTireBrand.setOnAction((event) -> {
@@ -159,7 +149,7 @@ public class InvoiceController {
 
 			Customer invoiceCust = CheckCustomer();
 			Order invoiceOrder = CheckOrder();
-			Invoice invoice = CheckInvoice(invoiceCust, invoiceOrder);
+			CheckInvoice(invoiceCust, invoiceOrder);
 
 			String invoiceString = ("First Name: " + firstName.getText() + "\nLast Name: " + lastName.getText()
 					+ "\nPhone Number: " + phoneNumber.getText() + "\nEmail: " + em.getText() + "\nTire Name: "
@@ -176,16 +166,11 @@ public class InvoiceController {
 			invoiceAlert.setContentText(orderText);
 			invoiceAlert.showAndWait();
 			sendEmail(invoiceCust.getEmail(), orderText);
-			ClearFields();
+			clearFields();
 		});
 
 		backButton.setOnAction(e -> {
-			try {
-				StackPane pane = FXMLLoader.load(getClass().getResource("/views/Home.fxml"));
-				root.setCenter(pane);
-			} catch (IOException ex) {
-				ex.printStackTrace();
-			}
+			sceneSwitcher.switchScene(backButton, "/views/Home.fxml");
 		});
 
 /*		customerButton.setOnAction(e -> {
@@ -375,7 +360,7 @@ public class InvoiceController {
 		cmbCustomer.setItems(customerList);
 	}
 
-	private void ClearFields() {
+	private void clearFields() {
 		tireName.clear();
 		tireBrand.clear();
 		rimDiameter.clear();

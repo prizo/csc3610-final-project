@@ -1,16 +1,12 @@
 package controllers;
 
-import java.io.IOException;
-import application.TireShop;
+import helperclasses.SceneSwitcher;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.BorderPane;
 
 public class AppointmentController {
 	
-BorderPane root = TireShop.getRoot();
+	SceneSwitcher sceneSwitcher = new SceneSwitcher();
 	
 	@FXML
 	private Button btnBack;
@@ -19,13 +15,7 @@ BorderPane root = TireShop.getRoot();
 	private void initialize() {
 		
 		btnBack.setOnAction(e -> {
-			try {
-				StackPane pane = FXMLLoader.load(getClass().getResource
-				  ("/views/Home.fxml"));
-				root.setCenter(pane);
-			} catch (IOException ex) {
-				ex.printStackTrace();
-			}
+			sceneSwitcher.switchScene(btnBack, "/views/Home.fxml");
 		});
 		
 	}

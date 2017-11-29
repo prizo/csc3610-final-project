@@ -13,54 +13,43 @@
    <children>
       <Pane>
          <children>
-            <Text fill="WHITE" layoutX="323.0" layoutY="162.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Version Control">
+            <Text fill="WHITE" layoutX="326.0" layoutY="225.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Version Control">
                <font>
                   <Font size="18.0" />
                </font>
             </Text>
-            <Separator layoutX="323.0" layoutY="185.0" prefWidth="381.0" />
-            <Hyperlink fx:id="linkGitHub" layoutX="317.0" layoutY="198.0" text="https://github.com/prizo/csc3610-final-project" textFill="WHITE">
+            <Separator layoutX="326.0" layoutY="248.0" prefWidth="381.0" />
+            <Hyperlink fx:id="githubLink" layoutX="320.0" layoutY="261.0" text="https://github.com/prizo/csc3610-final-project" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
             </Hyperlink>
-            <Text fill="WHITE" layoutX="326.0" layoutY="303.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Database Schema">
+            <Text fill="WHITE" layoutX="321.0" layoutY="371.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Presentation Slides">
                <font>
                   <Font size="18.0" />
                </font>
             </Text>
-            <Separator layoutX="326.0" layoutY="326.0" prefWidth="381.0" />
-            <Hyperlink fx:id="linkSchema" layoutX="320.0" layoutY="339.0" text="schema.pdf" textFill="WHITE">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Hyperlink>
-            <Text fill="WHITE" layoutX="323.0" layoutY="433.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Presentation Slides">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Text>
-            <Separator layoutX="323.0" layoutY="456.0" prefWidth="381.0" />
-            <VBox layoutX="319.0" layoutY="469.0" spacing="10.0">
+            <Separator layoutX="321.0" layoutY="394.0" prefWidth="381.0" />
+            <VBox layoutX="317.0" layoutY="407.0" spacing="10.0">
                <children>
-                  <Hyperlink fx:id="linkOct26" text="Oct-26-2017.pdf" textFill="WHITE">
+                  <Hyperlink fx:id="pdfOct26" layoutY="-79.0" text="Oct-26-2017.pdf" textFill="WHITE">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Hyperlink>
-                  <Hyperlink fx:id="linkNov09" text="Nov-09-2017.pdf" textFill="WHITE">
+                  <Hyperlink fx:id="pdfNov09" layoutY="-34.0" text="Nov-09-2017.pdf" textFill="WHITE">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Hyperlink>
-                  <Hyperlink fx:id="linkNov30" text="Nov-11-2017.pdf" textFill="WHITE">
+                  <Hyperlink fx:id="pdfNov30" layoutY="11.0" text="Nov-30-2017.pdf" textFill="WHITE">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Hyperlink>
                </children>
             </VBox>
-            <Button fx:id="btnBack" layoutX="656.0" layoutY="594.0" mnemonicParsing="false" text="Back" />
+            <Button fx:id="btnBack" layoutX="654.0" layoutY="532.0" mnemonicParsing="false" text="Back" />
          </children></Pane>
    </children>
 </StackPane>

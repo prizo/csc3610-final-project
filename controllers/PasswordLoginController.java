@@ -1,27 +1,26 @@
 package controllers;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 import org.apache.commons.codec.digest.DigestUtils;
-import application.TireShop;
+
+import helperclasses.JDBCConnector;
+import helperclasses.SceneSwitcher;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.BorderPane;
 
 public class PasswordLoginController {
-	
-	BorderPane root = TireShop.getRoot();
-	Connection connection = TireShop.getConnection();
+
 	ResultSet user = LoginController.getUser();
+	
+	SceneSwitcher sceneSwitcher = new SceneSwitcher();
+	Connection connection = new JDBCConnector().getConnection();
 	
 	@FXML
 	private PasswordField txtPassword;
@@ -57,15 +56,13 @@ public class PasswordLoginController {
 			String md5Hex = DigestUtils.md5Hex(inputPassword);
 			
 			if (userPassword.equals(md5Hex)) {
+				sceneSwitcher.switchScene(btnLogin, "/views/Home.fxml");
+				
 				try {
-					StackPane pane = FXMLLoader.load(getClass().getResource
-					  ("/views/Home.fxml"));
-					root.setCenter(pane);
-
 					System.out.println("Employee " + user.getString("firstName") + " " + user.getString("lastName") +
 							" logged in on " + new Date());
-				} catch (Exception ex) {
-					ex.printStackTrace();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
 				}
 			}
 			else {
@@ -76,13 +73,7 @@ public class PasswordLoginController {
 		});
 		
 		btnBack.setOnAction(e -> {
-			try {
-				StackPane pane = FXMLLoader.load(getClass().getResource
-				  ("/views/Login.fxml"));
-				root.setCenter(pane);
-			} catch (IOException ex) {
-				ex.printStackTrace();
-			}
+			sceneSwitcher.switchScene(btnBack, "/views/Login.fxml");
 		});
 		
 	}

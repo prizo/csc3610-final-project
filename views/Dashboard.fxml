@@ -20,22 +20,22 @@
             </ImageView>
             <VBox layoutX="587.0" layoutY="206.0" spacing="40.0">
                <children>
-                  <Button fx:id="logInButton" mnemonicParsing="false" prefHeight="54.0" prefWidth="231.0" text="Log In">
+                  <Button fx:id="btnLogin" mnemonicParsing="false" prefHeight="54.0" prefWidth="231.0" text="Log In">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Button>
-                  <Button fx:id="adminButton" mnemonicParsing="false" prefHeight="53.0" prefWidth="234.0" text="Administration">
+                  <Button fx:id="btnAdmin" mnemonicParsing="false" prefHeight="53.0" prefWidth="234.0" text="Administration">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Button>
-                  <Button fx:id="reportsButton" mnemonicParsing="false" prefHeight="58.0" prefWidth="235.0" text="Reports">
+                  <Button fx:id="btnReport" mnemonicParsing="false" prefHeight="58.0" prefWidth="235.0" text="Reports">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Button>
-                  <Button fx:id="documentButton" mnemonicParsing="false" prefHeight="58.0" prefWidth="235.0" text="Documentation">
+                  <Button fx:id="btnDocument" mnemonicParsing="false" prefHeight="58.0" prefWidth="235.0" text="Documentation">
                      <font>
                         <Font size="18.0" />
                      </font>
