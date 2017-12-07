@@ -40,7 +40,7 @@ public class InvoiceController {
 
 	ResultSet user = LoginController.getUser();
 	Tire searchTire = SearchController.getTire();
-	
+
 	SceneSwitcher sceneSwitcher = new SceneSwitcher();
 	Connection con = new JDBCConnector().getConnection();
 
@@ -67,10 +67,8 @@ public class InvoiceController {
 
 	@FXML
 	private void initialize() throws ClassNotFoundException, SQLException {
-
 		IntegerSpinnerValueFactory quantityValues = new IntegerSpinnerValueFactory(1, 16, 1);
 		tireQuantity.setValueFactory(quantityValues);
-		// setTireNames();
 		laborCost.setText("0");
 		setSearchTire();
 		setTireBrands();
@@ -91,15 +89,9 @@ public class InvoiceController {
 					searchTire.setRimDiameter(results.getInt("rimdiameter"));
 					searchTire.setPrice(results.getInt("price"));
 					searchTire.setTireID(results.getInt("tireID"));
-					/*
-					 * tireName.setText(results.getString("name"));
-					 * tireBrand.setText(results.getString("brand"));
-					 * rimDiameter.setText(results.getString("rimdiameter")); tirePrice.setText("$"
-					 * + results.getString("price")); tireID.setText(results.getString("tireID"));
-					 */
 					setSearchTire();
 				}
-				
+
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
@@ -147,40 +139,36 @@ public class InvoiceController {
 
 		saveButton.setOnAction((event) -> {
 
-			Customer invoiceCust = CheckCustomer();
-			Order invoiceOrder = CheckOrder();
-			CheckInvoice(invoiceCust, invoiceOrder);
+			Customer invoiceCust = CreateCustomer();
+			Order invoiceOrder = CreateOrder();
+			//Checks that the customer and order aren't null before trying to create an invoice.
+			if (invoiceCust != null && invoiceOrder != null) {
+				CreateInvoice(invoiceCust, invoiceOrder);
 
-			String invoiceString = ("First Name: " + firstName.getText() + "\nLast Name: " + lastName.getText()
-					+ "\nPhone Number: " + phoneNumber.getText() + "\nEmail: " + em.getText() + "\nTire Name: "
-					+ tireName.getText() + "\nTire Brand: " + tireBrand.getText() + "\nRim Diameter: "
-					+ rimDiameter.getText() + "\nQuantity: " + tireQuantity.getValue() + "\nTire Price: "
-					+ tirePrice.getText() + "\nLabor Cost : $" + laborCost.getText());
-			txtinvoice.setText(invoiceString);
-			double totalPrice = (tireQuantity.getValue() * Double.parseDouble(tirePrice.getText()) + Double.parseDouble(laborCost.getText()));
-			String orderText = "You ordered " + tireQuantity.getValue() + " " + tireName.getText() + "\nEach tire cost $"+
-								tirePrice.getText() + "\nYour labor cost is $"+ laborCost.getText() + "\nYour total price is $" + totalPrice;
-			Alert invoiceAlert = new Alert(AlertType.INFORMATION);
-			invoiceAlert.setTitle("Order Placed");
-			invoiceAlert.setHeaderText("Thank you for shopping with group 4 tire shop.");
-			invoiceAlert.setContentText(orderText);
-			invoiceAlert.showAndWait();
-			sendEmail(invoiceCust.getEmail(), orderText);
-			clearFields();
+				String invoiceString = ("First Name: " + firstName.getText() + "\nLast Name: " + lastName.getText()
+						+ "\nPhone Number: " + phoneNumber.getText() + "\nEmail: " + em.getText() + "\nTire Name: "
+						+ tireName.getText() + "\nTire Brand: " + tireBrand.getText() + "\nRim Diameter: "
+						+ rimDiameter.getText() + "\nQuantity: " + tireQuantity.getValue() + "\nTire Price: "
+						+ tirePrice.getText() + "\nLabor Cost : $" + laborCost.getText());
+				txtinvoice.setText(invoiceString);
+				double totalPrice = (tireQuantity.getValue() * Double.parseDouble(tirePrice.getText())
+						+ Double.parseDouble(laborCost.getText()));
+				String orderText = "You ordered " + tireQuantity.getValue() + " " + tireName.getText()
+						+ "\nEach tire cost $" + tirePrice.getText() + "\nYour labor cost is $" + laborCost.getText()
+						+ "\nYour total price is $" + totalPrice;
+				Alert invoiceAlert = new Alert(AlertType.INFORMATION);
+				invoiceAlert.setTitle("Order Placed");
+				invoiceAlert.setHeaderText("Thank you for shopping with group 4 tire shop.");
+				invoiceAlert.setContentText(orderText);
+				invoiceAlert.showAndWait();
+				clearFields();
+				sendEmail(invoiceCust.getEmail(), orderText);
+			}
 		});
 
 		backButton.setOnAction(e -> {
 			sceneSwitcher.switchScene(backButton, "/views/Home.fxml");
 		});
-
-/*		customerButton.setOnAction(e -> {
-			try {
-				StackPane pane = FXMLLoader.load(getClass().getResource("/views/Customer.fxml"));
-				root.setCenter(pane);
-			} catch (IOException ex) {
-				ex.printStackTrace();
-			}
-		});*/
 
 		installTires.setOnAction(e -> {
 			if (installTires.isSelected()) {
@@ -202,19 +190,9 @@ public class InvoiceController {
 		tireBrand.setText(searchTire.getBrand());
 		tirePrice.setText(Double.toString(searchTire.getPrice()));
 		rimDiameter.setText(Integer.toString(searchTire.getRimDiameter()));
-		// tireID.setText(Integer.toString(searchTire.getTireID()));
 	}
 
-	/*
-	 * private void setTireNames() throws ClassNotFoundException, SQLException {
-	 * Statement statement = con.createStatement(); ResultSet rs =
-	 * statement.executeQuery("Select * from tires order by name");
-	 * tireNameList.removeAll(tireNameList); // Adds every name from tires to
-	 * thename list while (rs.next()) { tireNameList.add(rs.getString("name")); } //
-	 * Loads the tire name list in to the tire view tireView.setItems(tireNameList);
-	 * }
-	 */
-	private Customer CheckCustomer() {
+	private Customer CreateCustomer() {
 
 		StringBuilder errorMessage = new StringBuilder();
 
@@ -233,6 +211,8 @@ public class InvoiceController {
 		}
 		if (errorMessage.length() != 0) {
 			Alert alert = new Alert(AlertType.ERROR, errorMessage.toString());
+			alert.setTitle("Missing Customer Information");
+			alert.setHeaderText("Please fill in the empty fields.");
 			alert.showAndWait();
 		}
 
@@ -259,23 +239,20 @@ public class InvoiceController {
 			}
 		}
 		return null;
-
 	}
 
-	private Order CheckOrder() {
+	private Order CreateOrder() {
 
 		StringBuilder errorMessage = new StringBuilder();
 
-		if (tireName.getText().length() == 0) {
-			errorMessage.append("Select a tire.\n");
+		if (searchTire.getName().equals("")) {
+			errorMessage.append("Please select a tire.\n");
 		}
-
-		if (laborCost.getText().length() == 0) {
-			errorMessage.append("Enter a labor cost.\n");
-		}
-
+		
 		if (errorMessage.length() != 0) {
 			Alert alert = new Alert(AlertType.ERROR, errorMessage.toString());
+			alert.setTitle("Missing Tire");
+			alert.setHeaderText("Tire not selected.");
 			alert.showAndWait();
 		}
 
@@ -308,7 +285,7 @@ public class InvoiceController {
 		return null;
 	}
 
-	private Invoice CheckInvoice(Customer cust, Order order) {
+	private Invoice CreateInvoice(Customer cust, Order order) {
 		try {
 			String query = " insert into invoices (employeeID, customerID, orderID, invoiceDate)"
 					+ " values (?, ?, ?, ?)";
@@ -351,12 +328,12 @@ public class InvoiceController {
 
 	private void setCustomers() throws ClassNotFoundException, SQLException {
 		Statement statement = con.createStatement();
-		ResultSet rs = statement.executeQuery("Select email from customers");
+		ResultSet rs = statement.executeQuery("Select email from customers order by email ASC");
 		customerList.removeAll(customerList);
 		while (rs.next()) {
 			customerList.add(rs.getString("email"));
 		}
-		// Loads the tire brand list in to the tire brand
+		// Loads the customer emails in to the customer combo box
 		cmbCustomer.setItems(customerList);
 	}
 
@@ -372,40 +349,39 @@ public class InvoiceController {
 		phoneNumber.clear();
 		em.clear();
 		installTires.setSelected(false);
+		txtinvoice.clear();
+
 	}
-	
+
 	private void sendEmail(String recipientEmail, String emailText) {
 		final String username = "Group4TireShop@gmail.com";
-	    final String password = "csc3810'";
+		final String password = "csc3810'";
 
-	    Properties props = new Properties();
-	    props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
-	    props.put("mail.smtp.auth", true);
-	    props.put("mail.smtp.starttls.enable", true);
-	    props.put("mail.smtp.host", "smtp.gmail.com");
-	    props.put("mail.smtp.port", "587");
+		Properties props = new Properties();
+		props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+		props.put("mail.smtp.auth", true);
+		props.put("mail.smtp.starttls.enable", true);
+		props.put("mail.smtp.host", "smtp.gmail.com");
+		props.put("mail.smtp.port", "587");
 
+		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(username, password);
+			}
+		});
 
-	    Session session = Session.getInstance(props,
-	            new javax.mail.Authenticator() {
-	                protected PasswordAuthentication getPasswordAuthentication() {
-	                    return new PasswordAuthentication(username, password);
-	                }
-	            });
+		try {
 
-	    try {
+			Message message = new MimeMessage(session);
+			message.setFrom(new InternetAddress("no-reply@gmail.com"));
+			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipientEmail));
+			message.setSubject("Thank you for ordering tires using group 4 tire shop");
+			message.setText(emailText);
 
-	        Message message = new MimeMessage(session);
-	        message.setFrom(new InternetAddress("no-reply@gmail.com"));
-	        message.setRecipients(Message.RecipientType.TO,
-	                InternetAddress.parse(recipientEmail));
-	        message.setSubject("Thank you for ordering tires using group 4 tire shop");
-	        message.setText(emailText);
+			Transport.send(message);
 
-	        Transport.send(message);
-
-	    } catch (MessagingException e) {
-	        throw new RuntimeException(e);
-	    }
+		} catch (MessagingException e) {
+			throw new RuntimeException(e);
+		}
 	}
 }

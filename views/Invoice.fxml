@@ -95,7 +95,6 @@
                   </Label>
                </children>
             </VBox>
-            <TextField fx:id="tireID" visible="false" />
             <Label alignment="BASELINE_RIGHT" layoutX="81.0" layoutY="466.0" prefHeight="29.0" prefWidth="173.0" text="Returning Customer:" textFill="WHITE">
                <font>
                   <Font size="18.0" />

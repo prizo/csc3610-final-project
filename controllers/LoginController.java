@@ -61,12 +61,16 @@ public class LoginController {
 				}
 				else {
 					txtID.clear();
-					Alert alert = new Alert(AlertType.ERROR, "Invalid ID!");
+					Alert alert = new Alert(AlertType.ERROR, "Enter a valid ID.");
+					alert.setTitle("Incorrect ID");
+					alert.setHeaderText("Incorrect ID!");
 					alert.showAndWait();
 				}
 			}
 			catch (SQLException ex) {
-				Alert alert = new Alert(AlertType.ERROR, "Invalid ID!");
+				Alert alert = new Alert(AlertType.ERROR, "Enter a valid ID.");
+				alert.setTitle("Incorrect ID");
+				alert.setHeaderText("Incorrect ID!");
 				alert.showAndWait();
 			}
 		});

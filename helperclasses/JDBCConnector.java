@@ -14,7 +14,7 @@ public class JDBCConnector {
 			
 			// Establish a connection
 			connection = DriverManager.getConnection
-					("jdbc:mysql://localhost/tiregroup?verifyServerCertificate=false&useSSL=true", "root", "csc");
+					("jdbc:mysql://localhost/tiregroup?verifyServerCertificate=false&useSSL=true", "root", "csc4500");
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();

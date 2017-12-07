@@ -9,6 +9,7 @@ public class Tire {
 	private int rimDiameter;
 	
 	public Tire() {
+		this.setName("");
 		
 	}
 	

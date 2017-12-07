@@ -22,9 +22,6 @@ public class HomeController {
 	private Button btnInvoice;
 	
 	@FXML
-	private Button btnAppointment;
-	
-	@FXML
 	private Button btnLogout;
 	
 	@FXML
@@ -46,10 +43,6 @@ public class HomeController {
 		
 		btnInvoice.setOnAction(e -> {
 			sceneSwitcher.switchScene(btnInvoice, "/views/Invoice.fxml");
-		});
-		
-		btnAppointment.setOnAction(e -> {
-			sceneSwitcher.switchScene(btnAppointment, "/views/Appointment.fxml");
 		});
 		
 		btnLogout.setOnAction(e -> {
