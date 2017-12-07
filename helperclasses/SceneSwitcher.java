@@ -1,7 +1,6 @@
 package helperclasses;
 
 import java.io.IOException;
-
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -24,7 +23,6 @@ public class SceneSwitcher {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
 		// Create a new scene with root and set the stage
 		Scene scene = new Scene(root);
 		stage.setScene(scene);

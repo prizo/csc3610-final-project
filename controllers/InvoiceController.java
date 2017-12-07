@@ -69,7 +69,7 @@ public class InvoiceController {
 	private void initialize() throws ClassNotFoundException, SQLException {
 		IntegerSpinnerValueFactory quantityValues = new IntegerSpinnerValueFactory(1, 16, 1);
 		tireQuantity.setValueFactory(quantityValues);
-		clearFields();
+		laborCost.setText("0");
 		setSearchTire();
 		setTireBrands();
 		setCustomers();
@@ -161,10 +161,9 @@ public class InvoiceController {
 				invoiceAlert.setHeaderText("Thank you for shopping with group 4 tire shop.");
 				invoiceAlert.setContentText(orderText);
 				invoiceAlert.showAndWait();
-				sendEmail(invoiceCust.getEmail(), orderText);
 				clearFields();
+				sendEmail(invoiceCust.getEmail(), orderText);
 			}
-		
 		});
 
 		backButton.setOnAction(e -> {
@@ -246,7 +245,7 @@ public class InvoiceController {
 
 		StringBuilder errorMessage = new StringBuilder();
 
-		if (tireName.getText().length() == 0) {
+		if (searchTire.getName().equals("")) {
 			errorMessage.append("Please select a tire.\n");
 		}
 		
@@ -329,7 +328,7 @@ public class InvoiceController {
 
 	private void setCustomers() throws ClassNotFoundException, SQLException {
 		Statement statement = con.createStatement();
-		ResultSet rs = statement.executeQuery("Select email from customers");
+		ResultSet rs = statement.executeQuery("Select email from customers order by email ASC");
 		customerList.removeAll(customerList);
 		while (rs.next()) {
 			customerList.add(rs.getString("email"));
