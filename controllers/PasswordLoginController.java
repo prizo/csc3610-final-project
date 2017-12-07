@@ -67,7 +67,9 @@ public class PasswordLoginController {
 			}
 			else {
 				txtPassword.clear();
-				Alert alert = new Alert(AlertType.ERROR, "Password incorrect!");
+				Alert alert = new Alert(AlertType.ERROR, "Enter the correct password.");
+				alert.setTitle("Incorrect Password");
+				alert.setHeaderText("Incorrect Password");
 				alert.showAndWait();
 			}	
 		});

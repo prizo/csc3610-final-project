@@ -85,7 +85,10 @@ public class AdminPasswordCreateController {
 			else {
 				Alert alert = new Alert(AlertType.ERROR, 	"Password must be between 6-20 characters, contain a number," +
 															" and an uppercase letter");
+				alert.setTitle("Weak Password");
+				alert.setHeaderText("Password is not secure enough!");
 				alert.showAndWait();
+				
 			}
 			
 		});

@@ -63,12 +63,16 @@ public class AdminLoginController {
 					else {
 						txtID.clear();
 						Alert alert = new Alert(AlertType.ERROR, "Access Denied! You are not an Admin.");
+						alert.setTitle("Not Admin");
+						alert.setHeaderText("Admin Only");
 						alert.showAndWait();
 					}
 				}
 				else {
 					txtID.clear();
 					Alert alert = new Alert(AlertType.ERROR, "Invalid ID!");
+					alert.setTitle("Invalid ID");
+					alert.setHeaderText("Invalid ID!");
 					alert.showAndWait();
 				}
 			}
